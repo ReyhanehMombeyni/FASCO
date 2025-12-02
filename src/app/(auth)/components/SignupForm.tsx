@@ -56,7 +56,7 @@ export const SignupForm = () => {
   };
 
   return (
-    <section className="w-full pt-10 space-y-6 lg:max-w-lg xl:max-w-xl bg-white rounded-lg shadow-xl">
+    <section className="w-full pt-10 space-y-6 lg:max-w-lg xl:max-w-xl bg-white">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
           <div className="grid grid-cols-2 gap-4">
