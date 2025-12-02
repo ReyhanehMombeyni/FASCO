@@ -27,7 +27,7 @@ export function DealSlider() {
   const rightSideItems = getRightSideItems();
 
   return (
-    <div className="relative w-full h-60 lg:h-[500px] overflow-hidden grid grid-cols-5">
+    <div className="relative w-full h-60 sm:h-70 md:h-80 lg:h-[500px] overflow-hidden grid grid-cols-5">
       <div className="col-span-2 w-full relative">
         <Image
           src={currentItem.imageUrl}

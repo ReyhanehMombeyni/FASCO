@@ -19,7 +19,7 @@ export function NewArrivalsSection() {
   const categories = ["Men's Fashion", "Women's Fashion", "Women Accessories", "Men Accessories", "Discount Deals"];
  
   return (
-    <section className="py-5 sm:py-8 md:py-12 lg:py-20 px-10 md:px-20 lg:px-30">
+    <section className="py-5 sm:py-8 md:py-12 lg:py-20 px-5 md:px-20 lg:px-30">
       
       <h2 className="text-lg md:text-xl lg:text-4xl font-serif text-gray-600 lg:font-medium text-center tracking-wide mb-4">New Arrivals</h2>
       <p className="text-center text-[10px] md:text-xs lg:text-sm text-gray-400 mb-10 max-w-lg mx-auto">
@@ -27,13 +27,13 @@ export function NewArrivalsSection() {
         ultrices solliciitudin sem. scelerisque duid uitrices solicitudin.
       </p>
 
-      <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mb-12">
+      <div className="grid grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-5 mb-12">
         {categories.map((cat) => (
           <Button
             key={cat}
             onClick={() => setInitialCategory(cat)}
             variant={cat === initialCategory ? 'default' : 'outline'}
-            className={`text-xs lg:text-base rounded-lg px-3 p-1 md:px-5 md:py-2 lg:px-8 lg:py-6 border-none transition-colors ${
+            className={`text-[8px] sm:text-xs md:text-sm rounded-lg sm:py-4 md:py-5 border-none transition-colors ${
               cat === initialCategory 
                 ? 'bg-black text-white hover:bg-gray-800'
                 : 'bg-gray-50 text-gray-700 hover:bg-gray-50'
@@ -47,7 +47,7 @@ export function NewArrivalsSection() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 sm:gap-8 lg:gap-15 pt-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-15">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

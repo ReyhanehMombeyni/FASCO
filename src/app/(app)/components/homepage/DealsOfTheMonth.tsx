@@ -14,7 +14,7 @@ export function DealsOfTheMonth() {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
           
-          <Button className="text-[8px] sm:px-4 sm:py-2 sm:text-xs lg:px-10 lg:py-5 lg:text-lg">
+          <Button className="text-[10px] py-4 sm:px-5 sm:text-xs md:px-8 md:py-5 md:text-sm lg:px-10 lg:py-7 lg:text-lg">
             Buy Now
           </Button>
 
