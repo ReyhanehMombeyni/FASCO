@@ -1,0 +1,7 @@
+export * from './BrandMarquee'
+export * from './HeroHeader'
+export * from './DealsOfTheMonth'
+export * from './NewArrivals'
+export * from './ProductShowcase'
+export * from './InstagramFeed'
+export * from './TestimonialCarousel'
