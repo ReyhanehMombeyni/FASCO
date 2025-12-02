@@ -4,7 +4,7 @@ import { RightNav } from "./RightNav";
 
 export const Navbar = () => {
   return (
-    <nav className="sticky top-0 z-50 flex flex-col bg-white min-h-16 py-5 px-10 md:20 lg:px-30">
+    <nav className="sticky top-0 z-50 flex flex-col bg-white min-h-16 py-5 px-5 md:px-20 lg:px-30">
       <div className="flex justify-between">
         <Logo />
         <div className="flex items-center space-x-10">

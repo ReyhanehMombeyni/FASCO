@@ -8,7 +8,7 @@ import RightMen from "@/public/images/homepage/rightMen.svg";
 
 export function HeroHeader() {
   return (
-    <header className="grid grid-cols-1 lg:grid-cols-3 lg:gap-5 my-5 md:my-10 lg:my-15 px-10 md:px-20 lg:px-30">
+    <header className="grid grid-cols-1 lg:grid-cols-3 lg:gap-5 my-5 md:my-10 lg:my-15 px-5 md:px-20 lg:px-30">
       <div className="hidden lg:block relative bg-gray-200 rounded-2xl">
         <Image
           src={LeftMen}

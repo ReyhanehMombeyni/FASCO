@@ -22,7 +22,7 @@ const BRANDS = [
 
 export const BrandMarquee = () => {
   return (
-    <section className="overflow-hidden py-8 bg-white mb-10 mx-10 md:mx-20 lg:mx-30">
+    <section className="overflow-hidden py-8 bg-white mb-10 md:mx-20 lg:mx-30">
       <div 
         className="flex animate-marquee w-fit" 
         style={{ animationDuration: '30s' }}
