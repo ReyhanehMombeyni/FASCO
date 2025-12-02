@@ -27,7 +27,7 @@ export function DealSlider() {
   const rightSideItems = getRightSideItems();
 
   return (
-    <div className="relative w-full h-[290px] lg:h-[500px] overflow-hidden grid grid-cols-5">
+    <div className="relative w-full h-60 lg:h-[500px] overflow-hidden grid grid-cols-5">
       <div className="col-span-2 w-full relative">
         <Image
           src={currentItem.imageUrl}
@@ -35,16 +35,16 @@ export function DealSlider() {
           className="transition-opacity duration-500 object-cover"
           fill
         />
-        <div className="absolute bottom-2 md:bottom-5 p-2 w-full lg:bottom-10 lg:p-4 text-center bg-gray-200 opacity-90"> 
-          <div className="text-[9px] lg:text-sm lg:font-medium">
+        <div className="absolute bottom-2 md:bottom-5 py-2 px-1 w-full lg:bottom-10 lg:p-4 text-center bg-gray-200 opacity-90"> 
+          <div className="text-[6px] sm:text-[9px] lg:text-sm lg:font-medium">
             {currentItem.name} — {currentItem.caption}
           </div>
-          <div className="text-xs lg:text-lg lg:font-semibold text-red-600">
+          <div className="text-[8px] sm:text-xs lg:text-lg lg:font-semibold text-red-600">
             {currentItem.discount}
           </div>
         </div>
       </div>
-      <div className="col-span-3 grid grid-rows-6 ml-4">
+      <div className="col-span-3 grid grid-rows-6 ml-2 sm:ml-4">
         <div className="row-span-5 flex">
           {rightSideItems.map(
             ({ id, imageUrl, caption }) =>
@@ -56,14 +56,14 @@ export function DealSlider() {
                   <Image
                     src={imageUrl}
                     alt={caption}
-                    className="transition-opacity duration-500 object-cover ml-4"
+                    className="transition-opacity duration-500 object-cover ml-1 sm:ml-4"
                     fill
                   />
                 </div>
               )
           )}
         </div>
-        <div className="row-span-1 ml-4 mt-5">
+        <div className="row-span-1 ml-1 sm:ml-4 mt-5">
           <div className="flex space-x-2">
             {dealItems.map((_, index) => (
               <button
