@@ -47,7 +47,7 @@ export function NewArrivalsSection() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-15">
+      <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-10 lg:grid-cols-3 lg:gap-5 xl:gap-10">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
