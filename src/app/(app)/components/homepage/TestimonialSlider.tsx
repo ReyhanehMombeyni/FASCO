@@ -89,7 +89,7 @@ export const TestimonialSlider = () => {
         duis
       </p>
 
-      <div className="relative w-full h-80 flex justify-center items-center">
+      <div className="relative w-full flex justify-center items-center">
         {testimonials.map((testimonial, index) => {
           const isActive = index === currentIndex;
           const isLeft = index === getIndex(-1);
@@ -121,7 +121,7 @@ export const TestimonialSlider = () => {
         })}
       </div>
 
-      <div className="flex justify-center mt-8 space-x-4">
+      <div className="flex justify-center mt-5 space-x-4">
         <button
           onClick={goToPrev}
           className="p-3 rounded-full bg-white border-none text-gray-600 hover:bg-gray-100 transition shadow-xl"
