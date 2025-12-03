@@ -1,17 +1,23 @@
-import { BrandMarquee, HeroHeader, DealsOfTheMonth, ProductShowcase, InstagramFeed, TestimonialCarousel, NewArrivalsSection } from "./components/homepage";
-// import TestimonialSlider from "./components/homepage/TestimonialSlider";
+import {
+  BrandMarquee,
+  HeroHeader,
+  DealsOfTheMonth,
+  ProductShowcase,
+  InstagramFeed,
+  NewArrivalsSection,
+  TestimonialSlider,
+} from "./components/homepage";
 
 export default function Home() {
   return (
-    <div className="">
-      <HeroHeader/>
+    <div>
+      <HeroHeader />
       <BrandMarquee />
       <DealsOfTheMonth />
       <NewArrivalsSection />
       <ProductShowcase />
-      <InstagramFeed />
-      <TestimonialCarousel />
-      {/* <TestimonialSlider /> */}
+      <InstagramFeed /> 
+      <TestimonialSlider />
     </div>
   );
 }

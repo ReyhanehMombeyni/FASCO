@@ -55,19 +55,19 @@ const AutoplayHandler = () => {
 
 export const InstagramFeed = () => {
   return (
-    <section className="py-20 bg-white">
-        <div className="text-center mb-12 max-w-xl mx-auto px-10">
-          <h2 className="text-2xl md:text-4xl font-serif text-gray-800 tracking-wider">
+    <section className="pt-10 md:pt-15 pb-20 bg-white">
+        <div className="text-center mb-12 mx-auto px-5 md:px-20 lg:px-30">
+          <h2 className="text-lg md:text-xl lg:text-4xl font-serif text-gray-600 lg:font-medium text-center tracking-wide mb-4">
             Follow Us On Instagram
           </h2>
-          <p className="text-xs md:text-sm font-extralight text-gray-500 mt-4 px-4">
+          <p className="text-center text-[10px] md:text-xs sm:max-w-md md:max-w-lg mx-auto lg:text-sm text-gray-400 mb-10">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque
             duis ultrices sollicitudin aliquam sem, feugiatque quis ultrices
             sollicitudin.
           </p>
         </div>
 
-        <div className="relative">
+        <div className="relative lg:py-15">
           <Carousel
             opts={{
               align: "start",
@@ -84,8 +84,8 @@ export const InstagramFeed = () => {
                   <div
                     className={`${
                       index % 2
-                        ? "h-[300px] md:h-[350px]"
-                        : "h-[250px] md:h-[300px]"
+                        ? "h-[300px] lg:h-[350px]"
+                        : "h-[250px] lg:h-[300px]"
                     } relative w-full`}
                   >
                     <Image
