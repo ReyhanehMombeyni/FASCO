@@ -45,7 +45,7 @@ export const TestimonialCard = ({ testimonial, isActive }: PropTpe) => {
           <div className="w-full h-0.5 bg-gray-200"></div>
 
           <div className="pt-3 text-center">
-              <p className="text-xl md:text-2xl lg:text-xl xl:text-2xl text-gray-900">{name}</p>
+              <p className="text-lg md:text-2xl lg:text-xl xl:text-2xl text-gray-900">{name}</p>
               <p className="text-xs md:text-sm lg:text-xs xl:text-sm text-gray-500">{title}</p>
           </div>
         </div>
