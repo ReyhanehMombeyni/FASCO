@@ -8,8 +8,8 @@ const tags = ["Fashion", "Hats", "Sandal", "Belt", "Bags", "Sneaker", "Denim", "
 const priceRanges = ["$0-$50", "$50-$100", "$100-$150", "$150-$200", "$200-$300", "$300-$400"];
 
 const FilterSection = ({ title, children, open = true }: { title: string, children: React.ReactNode, open?: boolean }) => (
-  <div className="mb-5 pb-2 lg:pb-5">
-    <div className="flex justify-between items-center text-sm md:text-base lg:text-lg xl:text-xl mb-3">
+  <div className="mb-2 pb-2 lg:pb-5">
+    <div className="flex justify-between items-center text-xs md:text-sm lg:text-base xl:text-lg">
       <h3 className="sm:tracking-wider">{title}</h3>
       <ChevronUp className={`w-2.5 h-2.5 md:w-3 md:h-3 lg:w-4 lg:h-4 transition-transform ${open ? 'rotate-0' : 'rotate-180'}`} />
     </div>
@@ -19,8 +19,8 @@ const FilterSection = ({ title, children, open = true }: { title: string, childr
 
 export function FilterSidebar() {
   return (
-    <div className="space-y-4 font-serif">
-      <h2 className="text-md md:text-lg md:tracking-wide lg:text-xl xl:text-2xl mb-5">Filters</h2>
+    <div className="space-y-0 font-serif">
+      <h2 className="text-sm md:text-lg md:tracking-wide lg:text-xl xl:text-2xl mb-2">Filters</h2>
 
       <FilterSection title="Size">
         <div className="flex flex-wrap gap-1 md:gap-2 2xl:gap-3">
@@ -28,7 +28,7 @@ export function FilterSidebar() {
             <Button
               key={size}
               variant="outline"
-              className={`w-5 h-5 p-2.5 text-[8px] sm:text-[10px] sm:p-3.5 md:text-xs md:p-4 2xl:text-sm 2xl:p-5 rounded-sm border ${size === 'M' ? 'bg-black text-white hover:bg-black/90' : 'border-gray-300 text-gray-700 hover:bg-gray-100'}`}
+              className={`w-3 h-3 p-1.5 text-[6px] sm:text-[8px] sm:p-2 md:text-[10px] md:p-2.5 2xl:text-xs 2xl:p-3 rounded-[2px] border ${size === 'M' ? 'bg-black text-white hover:bg-black/90' : 'border-gray-300 text-gray-700 hover:bg-gray-100'}`}
             >
               {size}
             </Button>

@@ -24,10 +24,10 @@ const ProductCard = ({ product }: { product: Product }) => (
 
       <div className="pl-1 py-1 m-0">
         {/* <h4 className="text-[8px] font-light text-gray-500 mb-1">Category Name</h4> */}
-        <h1 className="text-[8px] tracking-tighter hover:text-gray-500 transition-colors cursor-pointer">
+        <h1 className="text-[8px] font-medium tracking-tighter hover:text-gray-500 transition-colors cursor-pointer">
           {product.name}
         </h1>
-        <p className="text-[8px]">
+        <p className="text-[7px]">
           {product.oldPrice && (
             <span className="line-through text-gray-400 mr-2">${product.oldPrice.toFixed(2)}</span>
           )}
