@@ -9,11 +9,11 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <Card className="px-2 pt-2 sm:p-4 rounded-lg border-none" style={{boxShadow: "0 10px 25px rgba(0,0,0,0.1)"}}>
-      <div className="relative w-full aspect-video">
+      <div className="overflow-y-hidden relative w-full aspect-video">
         <Image
           src={product.image_url}
           alt={product.name}
-            fill
+         fill
           className="object-cover rounded-lg"
         />
       </div>
