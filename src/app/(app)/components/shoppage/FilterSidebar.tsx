@@ -9,7 +9,7 @@ const priceRanges = ["$0-$50", "$50-$100", "$100-$150", "$150-$200", "$200-$300"
 
 const FilterSection = ({ title, children, open = true }: { title: string, children: React.ReactNode, open?: boolean }) => (
   <div className="mb-2 pb-2 lg:pb-5">
-    <div className="flex justify-between items-center text-xs md:text-sm lg:text-base xl:text-lg">
+    <div className="flex justify-between items-center text-xs md:text-sm lg:text-base xl:text-lg mb-1">
       <h3 className="sm:tracking-wider">{title}</h3>
       <ChevronUp className={`w-2.5 h-2.5 md:w-3 md:h-3 lg:w-4 lg:h-4 transition-transform ${open ? 'rotate-0' : 'rotate-180'}`} />
     </div>
@@ -28,7 +28,7 @@ export function FilterSidebar() {
             <Button
               key={size}
               variant="outline"
-              className={`w-3 h-3 p-1.5 text-[6px] sm:text-[8px] sm:p-2 md:text-[10px] md:p-2.5 2xl:text-xs 2xl:p-3 rounded-[2px] border ${size === 'M' ? 'bg-black text-white hover:bg-black/90' : 'border-gray-300 text-gray-700 hover:bg-gray-100'}`}
+              className={`w-3 h-3 p-1.5 text-[6px] sm:text-[8px] sm:p-2 md:text-[10px] md:p-2.5 xl:text-xs xl:p-3 rounded-[2px] md:rounded-xs xl:rounded-sm border ${size === 'M' ? 'bg-black text-white hover:bg-black/90' : 'border-gray-300 text-gray-700 hover:bg-gray-100'}`}
             >
               {size}
             </Button>
@@ -37,7 +37,7 @@ export function FilterSidebar() {
       </FilterSection>
 
       <FilterSection title="Colors">
-        <div className="flex flex-wrap gap-1 lg:gap-1.5 2xl:gap-2.5">
+        <div className="flex flex-wrap gap-0.5 lg:gap-1 2xl:gap-2">
           {colors.map((color) => (
             <div
               key={color}
@@ -52,7 +52,7 @@ export function FilterSidebar() {
       <FilterSection title="Prices">
         <div>
           {priceRanges.map((range) => (
-            <div key={range} className={`text-[10px] pt-1 sm:text-xs sm:py-1 md:text-sm lg:text-base 2xl:text-lg cursor-pointer ${range === '$100-$150' ? 'text-black font-semibold' : 'text-gray-600 hover:text-black'}`}>
+            <div key={range} className={`text-[8px] sm:text-[10px] md:text-xs sm:py-0.5 lg:py-1 lg:text-sm 2xl:text-base cursor-pointer ${range === '$100-$150' ? 'text-black font-semibold' : 'text-gray-600 hover:text-black'}`}>
               {range}
             </div>
           ))}
@@ -62,7 +62,7 @@ export function FilterSidebar() {
       <FilterSection title="Brands">
         <div>
           {brands.map((brand) => (
-            <div key={brand} className="text-[10px] pt-1 sm:text-xs sm:py-1 md:text-sm lg:text-base 2xl:text-lg text-gray-600 hover:text-black cursor-pointer">
+            <div key={brand} className="text-[8px] sm:text-[10px] md:text-xs sm:py-0.5 lg:py-1 lg:text-sm 2xl:text-base text-gray-600 hover:text-black cursor-pointer">
               {brand}
             </div>
           ))}
@@ -72,7 +72,7 @@ export function FilterSidebar() {
       <FilterSection title="Collections" open={false}>
         <div>
           {["All products", "Best sellers", "New arrivals", "Accessories"].map((collection) => (
-            <div key={collection} className={`text-[10px] pt-1 sm:text-xs sm:py-1 md:text-sm lg:text-base 2xl:text-lg cursor-pointer ${collection === 'All products' ? 'text-black font-medium' : 'text-gray-600 hover:text-black'}`}>
+            <div key={collection} className={`text-[8px] sm:text-[10px] md:text-xs sm:py-0.5 lg:py-1 lg:text-sm 2xl:text-base cursor-pointer ${collection === 'All products' ? 'text-black font-medium' : 'text-gray-600 hover:text-black'}`}>
               {collection}
             </div>
           ))}
@@ -84,7 +84,7 @@ export function FilterSidebar() {
           {tags.map((tag) => (
             <span 
               key={tag} 
-              className="text-[10px] pt-1 px-1 sm:text-xs sm:py-1 sm:px-3 2xl:text-sm 2xl:py-1.5 bg-gray-100 text-gray-700 rounded-full cursor-pointer hover:bg-gray-200"
+              className="text-[8px] px-1 sm:text-[10px] xl:text-[11px] md:py-1 md:px-2 2xl:px-3 2xl:text-xs 2xl:py-1.5 bg-gray-100 text-gray-700 rounded-full cursor-pointer hover:bg-gray-200"
             >
               {tag}
             </span>
