@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui";
 import { Product } from "@/src/actions/products";
 import { useGetAllProducts } from "@/src/hooks/useGetAllProducts";
 import Image from "next/image";
+import Link from "next/link";
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
@@ -19,7 +20,7 @@ const ProductCard = ({ product }: { product: Product }) => {
 
         <div className="pl-1 py-1 sm:pb-3 xl:pb-5 m-0">
           <h1 className="text-[8px] font-medium tracking-tighter sm:text-[10px] sm:tracking-normal sm:py-1 md:text-xs md:tracking-tighte lg:text-sm xl:text-lg xl:tracking-normal xl:py-2 2xl:text-xl hover:text-gray-500 transition-colors cursor-pointer">
-            {product.name}
+            <Link href={`/product/${product.id}`}>{product.name}</Link>
           </h1>
           <p className="text-[7px] sm:text-[9px] md:text-xs lg:text-sm xl:text-base 2xl:text-base">
             {/* {product.oldPrice && (

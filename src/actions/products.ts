@@ -21,10 +21,32 @@ export interface ProductWithCategory extends Product {
   category: CategoryDetails;
 }
 
-interface ProductFilters {
-  brand?: string;
-  size?: string;
-  minPrice?: number;
+// interface ProductFilters {
+//   brand?: string;
+//   size?: string;
+//   minPrice?: number;
+// }
+
+// export interface ColorOption {
+//     name: string;
+//     hex: string;
+// }
+
+export interface ProductDetailType {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    rating: number;
+    image_url: string;
+    // oldPrice: number; 
+    // reviewCount: number; 
+    // availableSizes: string[];
+    // availableColors: ColorOption[]; 
+    // stock: number;
+    // sku: string;
+    reviews: number;
+  status: "In Stock" | "Almost Sold Out" | "Sold Out";
 }
 
 export async function getCategories() {
@@ -96,4 +118,23 @@ export async function getAllProducts(): Promise<Product[]> {
   }
 
   return productsData as unknown as Product[];
+}
+
+
+export async function getProductDetails(productId: string): Promise<ProductDetailType | null> {
+    const supabase = await createServerSupabaseClient(); 
+
+    const { data, error } = await supabase
+        .from('products')
+        .select("*")
+        .eq('id', productId)
+        .single();
+
+    if (error) {
+        console.error("Supabase Error fetching product details:", error);
+        return null;
+    }
+
+    // اگر دیتابیس شما آرایه تصاویر یا رنگ‌ها را به صورت JSON ذخیره کرده باشد، ممکن است نیاز به پارس کردن باشد.
+    return data as ProductDetailType; 
 }
