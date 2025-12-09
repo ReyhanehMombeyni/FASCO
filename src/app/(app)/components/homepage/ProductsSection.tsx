@@ -16,9 +16,12 @@ interface ProductsSectionProps {
 
 export const ProductsSection = ({ categories }: ProductsSectionProps) => {
   const [initialCategory, setInitialCategory] = useState(categories[1]);
-  const { filteredProducts, isLoading } = useFilteredProducts(
-    initialCategory.id
-  );
+  const { 
+        filteredProducts, 
+        isLoading, 
+        loadMore, 
+        hasMore 
+    } = useFilteredProducts(initialCategory.id);
 
   return (
     <>
@@ -55,10 +58,17 @@ export const ProductsSection = ({ categories }: ProductsSectionProps) => {
               <ProductCard key={index} product={product} />
             ))}
           </div>
-          <div className="my-10 lg:mt-15 text-center">
-          <Button className="text-xs py-3 px-6 lg:py-6 lg:px-15 lg:text-base hadow-2xl">click more</Button>
-
-          </div>
+          {hasMore && (
+                <div className="my-10 lg:mt-15 text-center">
+                    <Button 
+                        onClick={loadMore} 
+                        disabled={isLoading} 
+                        className="text-xs py-3 px-6 lg:py-6 lg:px-15 lg:text-base hadow-2xl"
+                    >
+                        {isLoading ? 'Loading...' : 'Load More'}
+                    </Button>
+                </div>
+            )}
         </>
       )}
 

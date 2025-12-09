@@ -33,20 +33,25 @@ export interface ProductWithCategory extends Product {
 // }
 
 export interface ProductDetailType {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    rating: number;
-    image_url: string;
-    // oldPrice: number; 
-    // reviewCount: number; 
-    // availableSizes: string[];
-    // availableColors: ColorOption[]; 
-    // stock: number;
-    // sku: string;
-    reviews: number;
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  rating: number;
+  image_url: string;
+  // oldPrice: number;
+  // reviewCount: number;
+  // availableSizes: string[];
+  // availableColors: ColorOption[];
+  // stock: number;
+  // sku: string;
+  reviews: number;
   status: "In Stock" | "Almost Sold Out" | "Sold Out";
+}
+
+interface PaginatedData {
+  products: ProductWithCategory[];
+  totalCount: number;
 }
 
 export async function getCategories() {
@@ -63,33 +68,32 @@ export async function getCategories() {
 }
 
 export async function getProductsByCategory(
-  categoryId: string
-): Promise<ProductWithCategory[]> {
+  categoryId: string,
+  limit: number,
+  offset: number
+): Promise<PaginatedData> {
   const supabase = await createServerSupabaseClient();
 
-  const { data: productsData, error: productsError } = await supabase
+  const {
+    data: productsData,
+    error: productsError,
+    count,
+  } = await supabase
     .from("products")
-    .select(
-      `
-            id,
-            name,
-            description,
-            price,
-            rating,
-            reviews,
-            image_url,
-            status,
-            category:category_id (name) 
-        `
-    )
-    .eq("category_id", categoryId);
+    .select("*", { count: "exact" })
+    .eq("category_id", categoryId)
+    .order("created_at", { ascending: false })
+    .range(offset, offset + limit - 1);
 
   if (productsError) {
-    console.error("Supabase Error fetching products:", productsError);
-    return [];
+    console.error("Error fetching paginated products:", productsError);
+    return { products: [], totalCount: 0 };
   }
 
-  return productsData as unknown as ProductWithCategory[];
+  return {
+    products: productsData || [],
+    totalCount: count || 0,
+  };
 }
 
 export async function getAllProducts(): Promise<Product[]> {
@@ -120,21 +124,21 @@ export async function getAllProducts(): Promise<Product[]> {
   return productsData as unknown as Product[];
 }
 
+export async function getProductDetails(
+  productId: string
+): Promise<ProductDetailType | null> {
+  const supabase = await createServerSupabaseClient();
 
-export async function getProductDetails(productId: string): Promise<ProductDetailType | null> {
-    const supabase = await createServerSupabaseClient(); 
+  const { data, error } = await supabase
+    .from("products")
+    .select("*")
+    .eq("id", productId)
+    .single();
 
-    const { data, error } = await supabase
-        .from('products')
-        .select("*")
-        .eq('id', productId)
-        .single();
+  if (error) {
+    console.error("Supabase Error fetching product details:", error);
+    return null;
+  }
 
-    if (error) {
-        console.error("Supabase Error fetching product details:", error);
-        return null;
-    }
-
-    // اگر دیتابیس شما آرایه تصاویر یا رنگ‌ها را به صورت JSON ذخیره کرده باشد، ممکن است نیاز به پارس کردن باشد.
-    return data as ProductDetailType; 
+  return data as ProductDetailType;
 }
