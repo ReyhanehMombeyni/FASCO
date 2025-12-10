@@ -1,7 +1,6 @@
 "use client";
 import { Card, CardContent } from "@/components/ui";
 import { Product } from "@/src/actions/products";
-import { useGetAllProducts } from "@/src/hooks/useGetAllProducts";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -31,7 +30,6 @@ const ProductCard = ({ product }: { product: Product }) => {
             <span className="text-gray-800">${product.price.toFixed(2)}</span>
           </p>
 
-            
           {/* {(product.colors || product.sizes) && (
           <div className="flex mt-1 space-x-0.5">
             {product.colors &&
@@ -58,18 +56,14 @@ const ProductCard = ({ product }: { product: Product }) => {
   );
 };
 
-export function ProductGrid() {
-  // { products }: { products: Product[] }
-  const { products, isLoading } = useGetAllProducts();
+export function ProductGrid( { products }: { products: Product[] }) {
   return (
     <div className="grid grid-cols-3 gap-x-2 gap-y-3 lg:gap-x-5 lg:gap-y-7 xl:gap-x-10 xl:gap-y-12">
-      {isLoading ? (
-        <h1>isLoading...</h1>
-      ) : (
+      {
         products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))
-      )}
+      }
     </div>
   );
 }

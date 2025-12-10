@@ -4,6 +4,7 @@ import LeftMen from "@/public/images/homepage/leftMen.svg";
 import Womens from "@/public/images/homepage/womens.jpg";
 import SmileWomens from "@/public/images/homepage/smileWomens.jpg";
 import RightMen from "@/public/images/homepage/rightMen.svg";
+import Link from "next/link";
 
 
 export function HeroHeader() {
@@ -36,8 +37,11 @@ export function HeroHeader() {
           <Button
             variant="default"
             className="mt-4 bg-black text-white hover:bg-gray-800 rounded-none px-10 py-5 text-sm tracking-widest font-semibold"
+            asChild
           >
-            SHOP NOW
+            <Link href="/shop">
+              SHOP NOW
+            </Link>
           </Button>
         </div>
 
