@@ -1,6 +1,11 @@
 "use server";
 
 import { createClient as createServerSupabaseClient } from "@/src/supabase/server";
+import { Color } from "./shop";
+
+interface ColorsProduct {
+  colors: Color;
+}
 
 export interface Product {
   id: string;
@@ -11,6 +16,7 @@ export interface Product {
   reviews: number;
   image_url: string;
   status: "In Stock" | "Almost Sold Out" | "Sold Out";
+  product_colors: ColorsProduct[] | [];
 }
 
 export interface CategoryDetails {
@@ -20,17 +26,6 @@ export interface CategoryDetails {
 export interface ProductWithCategory extends Product {
   category: CategoryDetails;
 }
-
-// interface ProductFilters {
-//   brand?: string;
-//   size?: string;
-//   minPrice?: number;
-// }
-
-// export interface ColorOption {
-//     name: string;
-//     hex: string;
-// }
 
 export interface ProductDetailType {
   id: string;

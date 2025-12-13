@@ -8,11 +8,12 @@ interface Size {
   name: string;
   symbol: string;
 }
-interface Color {
+export interface Color {
   id: string;
   name: string;
   code: string;
 }
+
 export interface ItemsFilter {
   sizes: Size[] | [];
   collections: Name[] | [];
@@ -80,23 +81,44 @@ export async function getItemsFilter(): Promise<ItemsFilter> {
 export async function getFilteredProducts(filters: FilterParams) {
   const supabase = await createClient();
 
-  let query = supabase.from("products").select("*");
-
-  const filterMap: { [key in keyof FilterParams]: string } = {
-    size: "size_id",
-    color: "color_id",
+  let query = supabase.from("products").select(`*, product_sizes!inner(*), product_colors!inner(
+    colors (
+      id,
+      name,
+      code
+    )
+  ), product_tags!inner(*)`);
+  const singleValueMap: { [key: string]: string } = {
     brand: "brand_id",
     collection: "collection_id",
-    tag: "tag_id",
+  };
+
+  const multiValueMap: { [key: string]: string } = {
+    size: "product_sizes.size_id",
+    color: "product_colors.color_id",
+    tag: "product_tags.tag_id",
   };
 
   for (const key in filters) {
-    const filterKey = key as keyof FilterParams; 
-    const filterValue = filters[filterKey]; 
-    const columnName = filterMap[filterKey];
+    const filterKey = key as keyof FilterParams;
+    const filterValue = filters[filterKey];
 
     if (filterValue) {
-      query = query.eq(columnName, filterValue);
+      if (
+        filterKey === "size" ||
+        filterKey === "color" ||
+        filterKey === "tag"
+      ) {
+        const joinSyntax = multiValueMap[filterKey];
+        query = query.filter(joinSyntax, "eq", filterValue);
+
+        console.log(`Applying Join Filter: ${joinSyntax} = ${filterValue}`);
+      } else if (filterKey === "brand" || filterKey === "collection") {
+        const columnName = singleValueMap[filterKey];
+        query = query.eq(columnName, filterValue);
+
+        console.log(`Applying EQ Filter: ${columnName} = ${filterValue}`);
+      }
     }
   }
 

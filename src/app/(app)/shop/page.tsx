@@ -24,6 +24,7 @@ const filters = {
 
   const itemsFilter: ItemsFilter = await getItemsFilter();
     const products = await getFilteredProducts(filters);
+    
   return (
     <main>
       <section className="px-5 md:px-20 lg:px-30 pt-5 pb-15">
