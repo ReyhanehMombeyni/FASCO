@@ -32,7 +32,7 @@ const availableColors = product.product_colors;
             <span className="text-gray-800">${product.price.toFixed(2)}</span>
           </p>
             
-            <div className="pt-2 flex items-center gap-0.5">
+            <div className="lg:pt-2 flex items-center gap-0.5">
               {availableColors && (
                 availableColors?.map(({colors}) => (
                 <div

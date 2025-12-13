@@ -1,30 +1,46 @@
 import { Button } from "@/components/ui/button";
 import { ChevronDown, List, Grid3X3, Grid2X2 } from "lucide-react";
-import { FilterSidebar, ProductGrid } from "../components/shoppage";
+import { FilterSidebar, Pagination, ProductGrid } from "../components/shoppage";
 import { InstagramFeed, ProductShowcase } from "../components/homepage";
-import { getFilteredProducts, getItemsFilter, ItemsFilter } from "@/src/actions/shop";
+import {
+  getFilteredProducts,
+  getItemsFilter,
+  ItemsFilter,
+} from "@/src/actions/shop";
 
 interface ShopPageProps {
-        brand?: string, 
-        size?: string, 
-        color?: string;
-        collection?: string, 
-        tag?: string;
-    }
+  brand?: string;
+  size?: string;
+  color?: string;
+  collection?: string;
+  tag?: string;
+  page?: string;
+}
 
-const page = async ({ searchParams }: { searchParams: Promise<ShopPageProps> }) => {
+const page = async ({
+  searchParams,
+}: {
+  searchParams: Promise<ShopPageProps>;
+}) => {
+  const currentPage = Number((await searchParams).page) || 1;
+  const ITEMS_PER_PAGE = 6;
 
-const filters = {
-        size: (await searchParams).size || null,
-        brand: (await searchParams).brand || null,
-        color: (await searchParams).color || null,
-        collection: (await searchParams).collection || null,
-        tag: (await searchParams).tag || null,
-    };
+  const filters = {
+    size: (await searchParams).size || null,
+    brand: (await searchParams).brand || null,
+    color: (await searchParams).color || null,
+    collection: (await searchParams).collection || null,
+    tag: (await searchParams).tag || null,
+  };
 
   const itemsFilter: ItemsFilter = await getItemsFilter();
-    const products = await getFilteredProducts(filters);
-    
+  const { products, count } = await getFilteredProducts({
+    filters,
+    currentPage,
+    ITEMS_PER_PAGE,
+  });
+  const totalPages = count ? Math.ceil(count / ITEMS_PER_PAGE) : 0;
+
   return (
     <main>
       <section className="px-5 md:px-20 lg:px-30 pt-5 pb-15">
@@ -45,6 +61,12 @@ const filters = {
           <div className="col-span-3 xl:col-span-4">
             <Toolbar />
             <ProductGrid products={products} />
+
+            {totalPages > 1 && (
+              <div className="flex justify-center">
+                <Pagination totalPages={totalPages} currentPage={currentPage} />
+              </div>
+            )}
           </div>
         </div>
       </section>

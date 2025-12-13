@@ -85,7 +85,7 @@ export function FilterSidebar({itemsFilter}: {
             const isActive = isFilterActive('brand', id);
             return (<div key={name} 
             onClick={() => updateFilter('brand', isActive ? null : id)}
-            className={`${isActive && "text-gray-950 font-black"}text-[8px] sm:text-[10px] md:text-xs sm:py-0.5 lg:py-1 lg:text-sm 2xl:text-base text-gray-600 hover:text-black cursor-pointer`}>
+            className={`text-[8px] sm:text-[10px] md:text-xs sm:py-0.5 lg:py-1 lg:text-sm 2xl:text-base cursor-pointer ${isActive ? 'text-black font-medium' : 'text-gray-600 hover:text-black'}`}>
               {name}
             </div>
           )})}
@@ -113,7 +113,7 @@ export function FilterSidebar({itemsFilter}: {
             return (<span 
               key={name} 
               onClick={() => updateFilter('tag', isActive ? null : id)}
-              className={`${isActive && "text-gray-950 font-black"}text-[8px] px-1 sm:text-[10px] xl:text-[11px] md:py-1 md:px-2 2xl:px-3 2xl:text-xs 2xl:py-1.5 bg-gray-100 text-gray-700 rounded-full cursor-pointer hover:bg-gray-200`}
+              className={`${isActive && "text-gray-950 font-black"} text-[8px] px-1 sm:text-[10px] xl:text-[11px] md:py-1 md:px-2 2xl:px-3 2xl:text-xs 2xl:py-1.5 bg-gray-100 text-gray-700 rounded-full cursor-pointer hover:bg-gray-200`}
             >
               {name}
             </span>

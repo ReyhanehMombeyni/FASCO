@@ -1,4 +1,5 @@
 import { createClient } from "@/src/supabase/server";
+import { Product } from "./products";
 interface Name {
   id: string;
   name: string;
@@ -27,6 +28,17 @@ interface FilterParams {
   brand: string | null;
   collection: string | null;
   tag: string | null;
+}
+
+interface GetFilteredProductsProps {
+  filters: FilterParams;
+  currentPage: number;
+  ITEMS_PER_PAGE: number;
+}
+
+interface GetFilteredProducts {
+  products: Product[];
+  count: number;
 }
 
 export async function getItemsFilter(): Promise<ItemsFilter> {
@@ -78,16 +90,28 @@ export async function getItemsFilter(): Promise<ItemsFilter> {
   } as ItemsFilter;
 }
 
-export async function getFilteredProducts(filters: FilterParams) {
-  const supabase = await createClient();
+export async function getFilteredProducts(props: GetFilteredProductsProps): Promise<GetFilteredProducts> {
 
-  let query = supabase.from("products").select(`*, product_sizes!inner(*), product_colors!inner(
+  const supabase = await createClient();
+  const {filters, currentPage: page, ITEMS_PER_PAGE: limit}= props;
+
+  const start = (page - 1) * limit;
+  const end = page * limit - 1;
+  
+  let query = supabase
+    .from("products")
+    .select(
+      `*, product_sizes!inner(*), product_colors!inner(
     colors (
       id,
       name,
       code
     )
-  ), product_tags!inner(*)`);
+  ), product_tags!inner(*)`,
+      { count: "exact" }
+    )
+    .range(start, end);
+
   const singleValueMap: { [key: string]: string } = {
     brand: "brand_id",
     collection: "collection_id",
@@ -122,12 +146,12 @@ export async function getFilteredProducts(filters: FilterParams) {
     }
   }
 
-  const { data: products, error } = await query;
+  const { data: products, error, count } = await query;
 
   if (error) {
     console.error("Error fetching filtered products:", error);
-    return [];
+    return { products: [], count: 0 };
   }
 
-  return products || [];
+  return { products: products || [], count: count || 0 };
 }
