@@ -4,7 +4,7 @@ interface Name {
   id: string;
   name: string;
 }
-interface Size {
+export interface Size {
   id: string;
   name: string;
   symbol: string;
@@ -97,7 +97,7 @@ export async function getFilteredProducts(props: GetFilteredProductsProps): Prom
 
   const start = (page - 1) * limit;
   const end = page * limit - 1;
-  
+
   let query = supabase
     .from("products")
     .select(

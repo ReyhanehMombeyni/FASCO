@@ -21,10 +21,14 @@ export default async function page({
   if (!product) {
       notFound();
   }
-
+  // const discountAmount = originalPrice * (discountPercent / 100);  
   // const discountPercent = product.oldPrice
   //     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
   //     : 0;
+  let discountAmount = 0;
+  if(product.discount_percentage) {
+    discountAmount = product.price * (product.discount_percentage / 100); 
+  }
 
   return (
     <main>
@@ -40,7 +44,6 @@ export default async function page({
                     <Image src={product.image_url} alt={product.name} fill className="object-contain lg:object-cover xl:object-contain" />
                 </div>
                 <div className="flex gap-0.5 overflow-x-scroll sm:flex-col sm:overflow-y-scroll sm:overflow-x-none sm:w-1/4 md:w-1/5 no-scrollbar"> 
-                  {/* lg:flex-col space-x-2 lg:space-x-0 lg:space-y-2 overflow-x-scroll lg:overflow-y-auto max-h-screen */}
                     {
                       axKocholo.map((ax) => <div key={ax} className="bg-indigo-500 min-w-20 min-h-20 sm:min-w-25 sm:min-h-25 md:h-30 lg:min-w-15 lg:min-h-20 text-sm">
                          {ax}
@@ -50,7 +53,7 @@ export default async function page({
                 </div>
             </div>
 
-            <ProductDetail product={product} />
+            <ProductDetail product={product} discountAmount={discountAmount} />
 
         </div>
       </section>

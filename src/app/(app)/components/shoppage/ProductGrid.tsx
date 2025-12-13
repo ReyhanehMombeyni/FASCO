@@ -43,17 +43,6 @@ const availableColors = product.product_colors;
               ))
               )}
             </div>
-
-          {/* {product.sizes && product.sizes.map((size) => (
-              <span 
-                key={size} 
-                className="text-xs text-gray-500"
-              >
-                {size}
-              </span>
-            ))} */}
-          {/* </div>
-        ) : (<div>nothing</div>)} */}
         </div>
       </CardContent>
     </Card>

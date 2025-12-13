@@ -1,10 +1,14 @@
 "use server";
 
 import { createClient as createServerSupabaseClient } from "@/src/supabase/server";
-import { Color } from "./shop";
+import { Color, Size } from "./shop";
 
 interface ColorsProduct {
   colors: Color;
+}
+
+interface SizesProduct {
+  sizes: Size;
 }
 
 export interface Product {
@@ -34,7 +38,7 @@ export interface ProductDetailType {
   price: number;
   rating: number;
   image_url: string;
-  // oldPrice: number;
+  discount_percentage: number;
   // reviewCount: number;
   // availableSizes: string[];
   // availableColors: ColorOption[];
@@ -42,6 +46,8 @@ export interface ProductDetailType {
   // sku: string;
   reviews: number;
   status: "In Stock" | "Almost Sold Out" | "Sold Out";
+  product_colors: ColorsProduct[] | [];
+  product_sizes: SizesProduct[] | [];
 }
 
 interface PaginatedData {
@@ -126,7 +132,19 @@ export async function getProductDetails(
 
   const { data, error } = await supabase
     .from("products")
-    .select("*")
+    .select(`*, product_sizes(
+      sizes (
+      id,
+      name,
+      symbol
+    )
+      ), product_colors(
+      colors (
+      id,
+      name,
+      code
+    )
+      )`)
     .eq("id", productId)
     .single();
 
