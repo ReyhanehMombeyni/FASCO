@@ -10,7 +10,7 @@ export interface DiscountedProduct {
     discount_percentage: number;
 };
 
-async function getActiveCampaignEndDate() {
+export async function getActiveCampaignEndDate() {
   const supabase = await createClient();
   const { data, error } = await supabase.from('discount_campaigns').select('name, end_date').eq('is_active', true)
    .gte('end_date', new Date().toISOString())
@@ -66,7 +66,7 @@ export async function DealsOfTheMonth() {
             <h3 className="text-[10px] sm:text-xs md:text-sm lg:text-xl lg:font-medium text-gray-700">
               Hurry, Before It is Too Late!
             </h3>
-            <Timer endDateString={campaignEndDate} />
+            <Timer endDateString={campaignEndDate} type="DealsOfTheMonth" />
           </div>
         </div>
 

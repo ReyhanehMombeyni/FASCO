@@ -31,6 +31,12 @@ export interface ProductWithCategory extends Product {
   category: CategoryDetails;
 }
 
+export interface ProductInventory {
+  size_id: string;
+  color_id: string;
+  stock_quantity: number;
+}
+
 export interface ProductDetailType {
   id: string;
   name: string;
@@ -48,6 +54,7 @@ export interface ProductDetailType {
   status: "In Stock" | "Almost Sold Out" | "Sold Out";
   product_colors: ColorsProduct[] | [];
   product_sizes: SizesProduct[] | [];
+  product_inventory: ProductInventory[] | []
 }
 
 interface PaginatedData {
@@ -144,7 +151,13 @@ export async function getProductDetails(
       name,
       code
     )
-      )`)
+      ), 
+      product_inventory (
+          size_id, 
+          color_id, 
+          stock_quantity
+      )
+          `)
     .eq("id", productId)
     .single();
 

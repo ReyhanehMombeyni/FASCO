@@ -2,8 +2,7 @@ import { getProductDetails } from "@/src/actions/products";
 import { notFound } from "next/navigation";
 import { ProductDetail } from '../../components/productpage/ProductDetail';
 import Image from "next/image";
-import { DealsOfTheMonth, ProductShowcase } from "../../components/homepage";
-// import { Badge } from '@/components/ui/badge';
+import { DealsOfTheMonth, getActiveCampaignEndDate, ProductShowcase } from "../../components/homepage";
 
 const axKocholo= ["inyki", "onyhi", "hamin", "hamon", "invari", "onvari", "irako", "orako"];
 
@@ -12,6 +11,7 @@ export default async function page({
 }: {
   params: Promise<{ id: string }>;
 }) {
+
   const { id } = await params;
   if (!id) {
     console.error("Missing required product ID in parameters.");
@@ -21,10 +21,10 @@ export default async function page({
   if (!product) {
       notFound();
   }
-  // const discountAmount = originalPrice * (discountPercent / 100);  
-  // const discountPercent = product.oldPrice
-  //     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
-  //     : 0;
+
+   const campaignDetail = await getActiveCampaignEndDate();
+  const campaignEndDate= campaignDetail?.[0]?.end_date;
+  
   let discountAmount = 0;
   if(product.discount_percentage) {
     discountAmount = product.price * (product.discount_percentage / 100); 
@@ -53,7 +53,7 @@ export default async function page({
                 </div>
             </div>
 
-            <ProductDetail product={product} discountAmount={discountAmount} />
+            <ProductDetail product={product} discountAmount={discountAmount} campaignEndDate={campaignEndDate} />
 
         </div>
       </section>
