@@ -109,16 +109,16 @@ export const ProductDetail = ({
 
       <div className="mt-5 lg:mt-8">
         {currentStock <= LOW_STOCK_THRESHOLD && (
-          <div className="text-[8px] lg:text-xs">
+          <div className="text-xs">
             <p className="text-gray-600 mb-1">
               Only{" "}
               <span className="font-bold text-red-600">{currentStock}</span>{" "}
               item(s) left in stock!
             </p>
 
-            <div className="w-full bg-gray-200 rounded-full h-0.5 lg:h-1">
+            <div className="w-full bg-gray-200 rounded-full h-1">
               <div
-                className="bg-red-500 h-0.5 lg:h-1 rounded-full transition-all duration-500"
+                className="bg-red-500 h-1 rounded-full transition-all duration-500"
                 style={{
                   width: `${lowStockPercent}%`,
                 }}
@@ -203,7 +203,7 @@ export const ProductDetail = ({
             onChange={(e) =>
               setQuantity(Math.max(1, parseInt(e.target.value) || 1))
             }
-            className="w-12 text-center border-y-0 border-x rounded-none h-4 p-0 pl-2"
+            className="w-12 text-center border-y-0 border-x rounded-none h-4 p-0 pl-1 lg:pl-2 shadow-none"
           />
           <Button
             variant="ghost"

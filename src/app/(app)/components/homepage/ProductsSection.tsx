@@ -48,7 +48,7 @@ export const ProductsSection = ({ categories }: ProductsSectionProps) => {
         ))}
       </div>
       {isLoading ? (
-        <p className="col-span-3 text-center text-xl text-gray-500">
+        <p className="col-span-3 text-center text-gray-500 text-xs md:text-sm lg:text-base">
           Loading products...
         </p>
       ) : (

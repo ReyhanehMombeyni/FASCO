@@ -34,7 +34,7 @@ export const ProductShowcase = () => {
 
   return (
     <section className="w-full">
-      <div className="flex bg-gray-200 h-90 lg:h-110 xl:120">
+      <div className="flex bg-gray-200 h-90 lg:h-110 xl:h-120">
 
         <div className="hidden lg:block md:relative md:w-[50%]">
           <Image
@@ -46,7 +46,7 @@ export const ProductShowcase = () => {
 
         </div>
 
-        <div className="p-5 pr-15 flex flex-col justify-center items-start md:pr-10 md:py-15"> 
+        <div className="p-5 pr-15 flex flex-col justify-center items-start md:pr-10 md:py-15 md:pl-20"> 
             <p className="text-xs md:text-sm text-gray-500 mb-3">{product.collection}</p>
             <h1 className="text-4xl font-serif text-gray-700 mb-5 lg:text-5xl lg:tracking-wide lg:mb-8">{product.title}</h1>
             <p className="text-xs lg:text-sm uppercase font-semibold text-gray-700 tracking-wider underline cursor-pointer mb-4">Description</p>
