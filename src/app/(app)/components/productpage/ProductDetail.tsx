@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ProductDetailType } from "@/src/actions/products";
 import { Star, Minus, Plus } from "lucide-react";
 import { Badge } from "@/components/ui";
 import { Timer } from "../homepage/Timer";
+import { createClient } from "@/src/supabase/client";
 
 interface ProductDetailClientProps {
   product: ProductDetailType;
@@ -17,17 +18,21 @@ const LOW_STOCK_THRESHOLD = 50;
 export const ProductDetail = ({
   product,
   discountAmount,
-  campaignEndDate
+  campaignEndDate,
 }: ProductDetailClientProps) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(
     product.product_sizes[0]?.sizes.id || null
-  ); 
+  );
   const [selectedColor, setSelectedColor] = useState<string | null>(
     product.product_colors[0]?.colors.id || null
   );
   const [quantity, setQuantity] = useState(1);
 
+  const [viewerCount, setViewerCount] = useState(0);
+  const supabase = createClient();
+
   const {
+    id,
     name,
     rating,
     reviews,
@@ -60,6 +65,35 @@ export const ProductDetail = ({
     //     qty: quantity
     // });
   };
+
+  useEffect(() => {
+    const productChannel = supabase.channel(`product-${id}`, {
+      config: {
+        presence: {
+          key: "user-id-placeholder",
+        },
+      },
+    });
+
+    productChannel
+      .on("presence", { event: "sync" }, () => {
+        const presenceState = productChannel.presenceState();
+        const count = Object.keys(presenceState).length;
+        setViewerCount(count);
+      })
+      .subscribe(async (status) => {
+        if (status === "SUBSCRIBED") {
+          await productChannel.track({
+            user: "current_user_id",
+            time: new Date().toISOString(),
+          });
+        }
+      });
+
+    return () => {
+      productChannel.unsubscribe();
+    };
+  }, [id, supabase]);
 
   return (
     <div className="space-y-3 md:space-y-5">
@@ -96,15 +130,25 @@ export const ProductDetail = ({
         )}
       </div>
 
-      <div>
+      <div className="mt-5 lg:mt-8">
+        {viewerCount && (
+          <div className="flex items-center text-gray-500 text-sm mt-4">
+            <span role="img" aria-label="eye" className="mr-1">
+              👁️
+            </span>
+            <span className="text-xs lg:text-[13px] text-gray-500">
+              {viewerCount} people are viewing this right now
+            </span>
+          </div>
+        )}
         {discount_percentage > 0 && (
-          <div className="flex justify-between items-center bg-red-50/70 border border-red-100 rounded-md p-2.5 text-red-400 mt-5 lg:mt-8">
+          <div className="flex justify-between items-center bg-red-50/70 border border-red-100 rounded-md p-2.5 text-red-400 mt-4">
             <span className="font-thin font-serif tracking-wide text-xs lg:text-sm">
               Hurry up! Sale ends in:
             </span>
             <Timer endDateString={campaignEndDate} type="ProductPage" />
           </div>
-        ) }
+        )}
       </div>
 
       <div className="mt-5 lg:mt-8">
@@ -178,7 +222,7 @@ export const ProductDetail = ({
                 }
               `}
               style={{
-                backgroundColor: colors.code
+                backgroundColor: colors.code,
               }}
               title={colors.code}
             />
