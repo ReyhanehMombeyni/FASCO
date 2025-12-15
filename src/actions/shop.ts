@@ -28,6 +28,7 @@ interface FilterParams {
   brand: string | null;
   collection: string | null;
   tag: string | null;
+  range: string | null;
 }
 
 interface GetFilteredProductsProps {
@@ -90,13 +91,33 @@ export async function getItemsFilter(): Promise<ItemsFilter> {
   } as ItemsFilter;
 }
 
-export async function getFilteredProducts(props: GetFilteredProductsProps): Promise<GetFilteredProducts> {
-
+export async function getFilteredProducts(
+  props: GetFilteredProductsProps
+): Promise<GetFilteredProducts> {
   const supabase = await createClient();
-  const {filters, currentPage: page, ITEMS_PER_PAGE: limit}= props;
+  const { filters, currentPage: page, ITEMS_PER_PAGE: limit } = props;
 
   const start = (page - 1) * limit;
   const end = page * limit - 1;
+
+  let min_price: number | null = null;
+  let max_price: number | null = null;
+  const rangeFilterValue = filters.range;
+
+  if (rangeFilterValue) {
+    const rangeNumber = Number(rangeFilterValue);
+    
+    if (rangeNumber >= 1 && rangeNumber <= 4) {
+      min_price = rangeNumber * 50 - 50;
+      max_price = rangeNumber * 50;
+    } else if (rangeNumber === 5) {
+      min_price = 200;
+      max_price = 300;      
+    } else if(rangeNumber === 6) {
+      min_price = 300;
+      max_price = 400;      
+    }
+  }
 
   let query = supabase
     .from("products")
@@ -128,6 +149,7 @@ export async function getFilteredProducts(props: GetFilteredProductsProps): Prom
     const filterValue = filters[filterKey];
 
     if (filterValue) {
+      if (filterKey === "range") continue;
       if (
         filterKey === "size" ||
         filterKey === "color" ||
@@ -146,7 +168,14 @@ export async function getFilteredProducts(props: GetFilteredProductsProps): Prom
     }
   }
 
-  const { data: products, error, count } = await query;
+  if (min_price !== null) {
+      query = query.gte('price', min_price);
+  }
+  if (max_price !== null) {
+      query = query.lte('price', max_price);
+  }
+
+  const { data: products, error, count } = await query.range(start, end);
 
   if (error) {
     console.error("Error fetching filtered products:", error);

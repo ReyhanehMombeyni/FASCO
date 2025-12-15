@@ -11,6 +11,10 @@ interface SizesProduct {
   sizes: Size;
 }
 
+interface StockSummary{
+    total_stock: number;
+  }
+
 export interface Product {
   id: string;
   name: string;
@@ -18,8 +22,12 @@ export interface Product {
   price: number;
   rating: number;
   reviews: number;
+  discount_percentage: number;
   image_url: string;
-  status: "In Stock" | "Almost Sold Out" | "Sold Out";
+  brands: {
+      name: string;
+  },
+  stock_summary: StockSummary[] | []
   product_colors: ColorsProduct[] | [];
 }
 
@@ -51,7 +59,6 @@ export interface ProductDetailType {
   // stock: number;
   // sku: string;
   reviews: number;
-  status: "In Stock" | "Almost Sold Out" | "Sold Out";
   product_colors: ColorsProduct[] | [];
   product_sizes: SizesProduct[] | [];
   product_inventory: ProductInventory[] | []
@@ -88,7 +95,9 @@ export async function getProductsByCategory(
     count,
   } = await supabase
     .from("products")
-    .select("*", { count: "exact" })
+    .select(`*, brands(name), stock_summary:product_stock_summary (
+            total_stock
+        )`, { count: "exact" })
     .eq("category_id", categoryId)
     .order("created_at", { ascending: false })
     .range(offset, offset + limit - 1);

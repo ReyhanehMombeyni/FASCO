@@ -5,7 +5,31 @@ import { useFilterUpdater } from "@/src/hooks/useFilterUpdater";
 import { ChevronUp } from "lucide-react";
 import { useState } from "react";
 
-const priceRanges = ["$0-$50", "$50-$100", "$100-$150", "$150-$200", "$200-$300", "$300-$400"];
+const priceRanges = [{
+  id: "1",
+  min_range: "0",
+  max_range: "50",
+}, {
+  id: "2",
+  min_range: "50",
+  max_range: "100",
+}, {
+  id: "3",
+  min_range: "100",
+  max_range: "150",
+}, {
+  id: "4",
+  min_range: "150",
+  max_range: "200",
+}, {
+  id: "5",
+  min_range: "200",
+  max_range: "300",
+}, {
+  id: "6",
+  min_range: "300",
+  max_range: "400",
+}]
 
 const FilterSection = ({ title, children }: { title: string, children: React.ReactNode }) => {
   
@@ -71,11 +95,16 @@ export function FilterSidebar({itemsFilter}: {
 
       <FilterSection title="Prices">
         <div>
-          {priceRanges.map((range) => (
-            <div key={range} className={`text-[8px] sm:text-[10px] md:text-xs sm:py-0.5 lg:py-1 lg:text-sm 2xl:text-base cursor-pointer ${range === '$100-$150' ? 'text-black font-semibold' : 'text-gray-600 hover:text-black'}`}>
-              {range}
+          {priceRanges.map(({id, min_range, max_range}, index) => {
+            const isActive = isFilterActive('range', id);
+            return (
+            <div key={index}
+            onClick={() => updateFilter('range', isActive ? null : id)}
+            className={`text-[8px] sm:text-[10px] md:text-xs sm:py-0.5 lg:py-1 lg:text-sm 2xl:text-base cursor-pointer ${isActive ? 'text-black font-semibold' : 'text-gray-600 hover:text-black'}`}>
+              {`$${min_range}-$${max_range}`}
             </div>
-          ))}
+          )
+          })}
         </div>
       </FilterSection>
 

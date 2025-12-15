@@ -15,6 +15,7 @@ interface ShopPageProps {
   collection?: string;
   tag?: string;
   page?: string;
+  range?: string;
 }
 
 const page = async ({
@@ -31,6 +32,7 @@ const page = async ({
     color: (await searchParams).color || null,
     collection: (await searchParams).collection || null,
     tag: (await searchParams).tag || null,
+    range: (await searchParams).range || null,
   };
 
   const itemsFilter: ItemsFilter = await getItemsFilter();
@@ -60,8 +62,13 @@ const page = async ({
 
           <div className="col-span-3 xl:col-span-4">
             <Toolbar />
-            <ProductGrid products={products} />
-
+            {
+              products.length ? (<ProductGrid products={products} />) : (<div className="h-screen flex justify-center pt-20 text-xs lg:text-sm text-red-500">
+                There is no product matching your request.
+              </div>)
+ 
+            }
+            
             {totalPages > 1 && (
               <div className="flex justify-center">
                 <Pagination totalPages={totalPages} currentPage={currentPage} />
