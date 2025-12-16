@@ -1,73 +1,7 @@
-"use server";
-
+'use server'
 import { createClient as createServerSupabaseClient } from "@/src/supabase/server";
-import { Color, Size } from "./shop";
-
-interface ColorsProduct {
-  colors: Color;
-}
-
-interface SizesProduct {
-  sizes: Size;
-}
-
-interface StockSummary{
-    total_stock: number;
-  }
-
-export interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  rating: number;
-  reviews: number;
-  discount_percentage: number;
-  image_url: string;
-  brands: {
-      name: string;
-  },
-  stock_summary: StockSummary[] | []
-  product_colors: ColorsProduct[] | [];
-}
-
-export interface CategoryDetails {
-  name: string;
-}
-
-export interface ProductWithCategory extends Product {
-  category: CategoryDetails;
-}
-
-export interface ProductInventory {
-  size_id: string;
-  color_id: string;
-  stock_quantity: number;
-}
-
-export interface ProductDetailType {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  rating: number;
-  image_url: string;
-  discount_percentage: number;
-  // reviewCount: number;
-  // availableSizes: string[];
-  // availableColors: ColorOption[];
-  // stock: number;
-  // sku: string;
-  reviews: number;
-  product_colors: ColorsProduct[] | [];
-  product_sizes: SizesProduct[] | [];
-  product_inventory: ProductInventory[] | []
-}
-
-interface PaginatedData {
-  products: ProductWithCategory[];
-  totalCount: number;
-}
+import { Product, ProductDetailType } from "../types/products";
+import { PaginatedData } from "../types/shop";
 
 export async function getCategories() {
   const supabase = await createServerSupabaseClient();

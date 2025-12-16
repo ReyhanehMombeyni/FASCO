@@ -5,12 +5,6 @@ import { Check, Shield, Truck, Headset, LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui";
 import peakyBlinders from '@/public/images/homepage/peakyBlinders.png';
 
-interface FeatureCard {
-  icon: LucideIcon;
-  title: string;
-  subtitle: string;
-}
-
 const product = {
   title: "Peaky Blinders",
   collection: "Women Collection",
@@ -19,15 +13,19 @@ const product = {
   size: "M",
 };
 
-  const FeatureCard = ({ icon: Icon, title, subtitle }: FeatureCard) => (
-    <div className="flex items-center gap-2 md:gap-4">
+  const FeatureCard = ( { icon: Icon, title, subtitle } : {
+  icon: LucideIcon;
+  title: string;
+  subtitle: string;
+}) => {
+    return <div className="flex items-center gap-2 md:gap-4">
       <Icon className="h-7 w-7 md:h-10 md:w-10 text-gray-800 mb-2" />
       <div className="text-left">
         <h4 className="text-xs md:text-sm font-medium">{title}</h4>
         <p className="text-[10px] md:text-xs text-gray-500">{subtitle}</p>
       </div>
     </div>
-  );
+  };
 
 
 export const ProductShowcase = () => {

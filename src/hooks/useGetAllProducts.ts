@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getAllProducts, Product } from '@/src/actions/products';
+import { getAllProducts, Product } from '@/src/services/products';
 
 export const useGetAllProducts = () => {
     const [products, setProducts] = useState<Product[]>([]);

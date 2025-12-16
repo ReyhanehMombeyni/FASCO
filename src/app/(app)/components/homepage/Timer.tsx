@@ -1,30 +1,8 @@
 "use client";
+import { TimeLeft, TimerBlockProps, TimerProps, TimeValues } from "@/src/types/homepage";
 import { useEffect, useState } from "react";
 
-interface TimeValues {
-  Days: number;
-  Hr: number;
-  Mins: number;
-  Sec: number;
-}
-interface TimeLeft {
-  Days: string;
-  Hr: string;
-  Mins: string;
-  Sec: string;
-  isFinished: boolean;
-}
 
-interface TimerBlockProps {
-  value: string;
-  label: string;
-  type: string;
-}
-
-export interface TimerProps {
-  endDateString: string;
-  type: string;
-}
 const calculateTimeLeft = (targetDate: string): TimeLeft => {
   const difference = +new Date(targetDate) - +new Date();
 

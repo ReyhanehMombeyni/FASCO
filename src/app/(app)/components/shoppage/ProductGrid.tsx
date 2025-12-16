@@ -1,11 +1,11 @@
 "use client";
-import { Card, CardContent } from "@/components/ui";
-import { Product } from "@/src/actions/products";
 import Image from "next/image";
 import Link from "next/link";
+import { Card, CardContent } from "@/components/ui";
+import { ProductDetailType } from "@/src/types/products";
 
-const ProductCard = ({ product }: { product: Product }) => {
-const availableColors = product.product_colors;
+const ProductCard = ({ product }: { product: ProductDetailType }) => {
+  const availableColors = product.product_colors;
 
   return (
     <Card className="rounded-none border-none shadow-none p-0 m-0">
@@ -24,32 +24,26 @@ const availableColors = product.product_colors;
             <Link href={`/product/${product.id}`}>{product.name}</Link>
           </h1>
           <p className="text-[7px] sm:text-[9px] md:text-xs lg:text-sm xl:text-base 2xl:text-base">
-            {/* {product.oldPrice && (
-            <span className="line-through text-gray-400 mr-2">
-              ${product.oldPrice.toFixed(2)}
-            </span>
-          )} */}
             <span className="text-gray-800">${product.price.toFixed(2)}</span>
           </p>
-            
-            <div className="lg:pt-2 flex items-center gap-0.5">
-              {availableColors && (
-                availableColors?.map(({colors}) => (
+
+          <div className="lg:pt-2 flex items-center gap-0.5">
+            {availableColors &&
+              availableColors?.map(({ colors }) => (
                 <div
                   key={colors.id}
                   className={`w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 2xl:w-7 2xl:h-7 rounded-full cursor-pointer border border-gray-200 transition-all`}
                   style={{ backgroundColor: colors.code }}
                 ></div>
-              ))
-              )}
-            </div>
+              ))}
+          </div>
         </div>
       </CardContent>
     </Card>
   );
 };
 
-export function ProductGrid({ products }: { products: Product[] }) {
+export function ProductGrid({ products }: { products: ProductDetailType[] }) {
   return (
     <div className="grid grid-cols-3 gap-x-2 gap-y-3 lg:gap-x-5 lg:gap-y-7 xl:gap-x-10 xl:gap-y-12">
       {products.map((product) => (

@@ -1,19 +1,15 @@
 "use client";
 
+import { DiscountedDetail } from "@/src/types/homepage";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { DiscountedProduct } from "./DealsOfTheMonth";
-
-interface DiscountedDetail {
-  nameCompain: string;
-  discountedProducts: DiscountedProduct[];
-}
 
 
 export function DealSlider(discountedDetail: DiscountedDetail) {
-  const {nameCompain, discountedProducts}= discountedDetail;
-
+  
   const [currentIndex, setCurrentIndex] = useState(0);
+  
+  const {nameCompain, discountedProducts}= discountedDetail;
   const itemsCount = discountedProducts.length;
 
   useEffect(() => {

@@ -2,30 +2,13 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, List, Grid3X3, Grid2X2 } from "lucide-react";
 import { FilterSidebar, Pagination, ProductGrid } from "../components/shoppage";
 import { InstagramFeed, ProductShowcase } from "../components/homepage";
-import {
-  getFilteredProducts,
-  getItemsFilter,
-  ItemsFilter,
-} from "@/src/actions/shop";
+import { getFilteredProducts, getItemsFilter } from "@/src/services/shop";
+import { ItemsFilter, SearchParams } from "@/src/types/shop";
 
-interface ShopPageProps {
-  brand?: string;
-  size?: string;
-  color?: string;
-  collection?: string;
-  tag?: string;
-  page?: string;
-  range?: string;
-}
+const page = async ({ searchParams }: SearchParams) => {
 
-const page = async ({
-  searchParams,
-}: {
-  searchParams: Promise<ShopPageProps>;
-}) => {
   const currentPage = Number((await searchParams).page) || 1;
   const ITEMS_PER_PAGE = 6;
-
   const filters = {
     size: (await searchParams).size || null,
     brand: (await searchParams).brand || null,
@@ -54,7 +37,6 @@ const page = async ({
             Fashion
           </h1>
         </div>
-
         <div className="grid grid-cols-4 xl:grid-cols-5 gap-3 md:gap-5 lg:gap-8">
           <div className="col-span-1">
             <FilterSidebar itemsFilter={itemsFilter} />
@@ -62,13 +44,14 @@ const page = async ({
 
           <div className="col-span-3 xl:col-span-4">
             <Toolbar />
-            {
-              products.length ? (<ProductGrid products={products} />) : (<div className="h-screen flex justify-center pt-20 text-xs lg:text-sm text-red-500">
+            {products.length ? (
+              <ProductGrid products={products} />
+            ) : (
+              <div className="h-screen flex justify-center pt-20 text-xs lg:text-sm text-red-500">
                 There is no product matching your request.
-              </div>)
- 
-            }
-            
+              </div>
+            )}
+
             {totalPages > 1 && (
               <div className="flex justify-center">
                 <Pagination totalPages={totalPages} currentPage={currentPage} />

@@ -1,44 +1,8 @@
-import { createClient } from '@/src/supabase/server';
 import { Button } from "@/components/ui";
 import { Timer } from "./Timer"; 
 import { DealSlider } from "./DealSlider"; 
-
-export interface DiscountedProduct {
-    id: string;
-    name: string;
-    image_url: string;
-    discount_percentage: number;
-};
-
-export async function getActiveCampaignEndDate() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.from('discount_campaigns').select('name, end_date').eq('is_active', true)
-   .gte('end_date', new Date().toISOString())
-  .limit(1); 
-
-  if (error) {
-    console.error("Error fetching campaign:", error);
-    return null;
-  }
-  
-  return data;
-}
-
-async function getDiscountedProducts(): Promise<DiscountedProduct[]> { 
-  const supabase = await createClient();
-  
-  const { data: products, error } = await supabase.from('products').select('id, name,image_url, discount_percentage')
-    .eq('is_on_sale', true) 
-    // .order('created_at', { ascending: false }) 
-    .limit(4);
-
-  if (error) {
-    console.error("Error fetching discounted products:", error);
-    return [];
-  }
-  
-  return products;
-}
+import { getActiveCampaignEndDate, getDiscountedProducts } from "@/src/services/deals";
+import Link from "next/link";
 
 export async function DealsOfTheMonth() {
 
@@ -59,7 +23,7 @@ export async function DealsOfTheMonth() {
           </p>
           
           <Button className="text-[10px] py-4 sm:px-5 sm:text-xs md:px-8 md:py-5 md:text-sm lg:px-10 lg:py-7 lg:text-lg">
-            Buy Now
+            <Link href="/shop">Buy Now</Link>
           </Button>
 
           <div className="pt-4 sm:pt-10 space-y-4">

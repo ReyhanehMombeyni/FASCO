@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { getProductsByCategory, Product } from '@/src/actions/products';
+import { getProductsByCategory } from '@/src/services/products';
+import { Product } from '../types/products';
 
 const ITEMS_PER_PAGE = 6;
 

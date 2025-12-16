@@ -1,7 +1,7 @@
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Product } from "@/src/actions/products";
-import { Star } from "lucide-react";
 import Image from "next/image";
+import { Star } from "lucide-react";
+import { Card, CardContent, CardFooter } from "@/components/ui";
+import { Product } from "@/src/types/products";
 
 export function ProductCard({ product }: { product: Product }) {
   const {

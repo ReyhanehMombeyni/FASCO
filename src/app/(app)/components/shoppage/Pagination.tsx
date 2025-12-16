@@ -3,12 +3,13 @@
 import { useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 
-interface PaginationProps {
+export function Pagination({
+  totalPages,
+  currentPage,
+}: {
   totalPages: number;
   currentPage: number;
-}
-
-export function Pagination({ totalPages, currentPage }: PaginationProps) {
+}) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -28,34 +29,43 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
 
   return (
     <div className="pt-5">
-        <nav className="pagination-controls flex gap-4 items-center">
+      <nav className="pagination-controls flex gap-4 items-center">
         <Link
-            aria-disabled={currentPage <= 1}
-            href={currentPage <= 1 ? '#' : createPageURL(currentPage - 1)}
-            className={`${currentPage <= 1 ? "text-gray-400 cursor-auto" : ""} text-xl`}
-            
+          aria-disabled={currentPage <= 1}
+          href={currentPage <= 1 ? "#" : createPageURL(currentPage - 1)}
+          className={`${
+            currentPage <= 1 ? "text-gray-400 cursor-auto" : ""
+          } text-xl`}
         >
-            «
+          «
         </Link>
 
         {pages.map((page) => (
-            <Link
+          <Link
             key={page}
-            href={page === currentPage ? '#' : createPageURL(page)}
-            className={`${page === currentPage ? "bg-gray-100 px-2 rounded-full cursor-auto" : ""}`}
-            >
+            href={page === currentPage ? "#" : createPageURL(page)}
+            className={`${
+              page === currentPage
+                ? "bg-gray-100 px-2 rounded-full cursor-auto"
+                : ""
+            }`}
+          >
             {page}
-            </Link>
+          </Link>
         ))}
 
         <Link
-            aria-disabled={currentPage >= totalPages}
-            href={currentPage >= totalPages ? '#' : createPageURL(currentPage + 1)}
-            className={`${currentPage >= totalPages ? "text-gray-400 cursor-auto" : ""} text-xl`}
+          aria-disabled={currentPage >= totalPages}
+          href={
+            currentPage >= totalPages ? "#" : createPageURL(currentPage + 1)
+          }
+          className={`${
+            currentPage >= totalPages ? "text-gray-400 cursor-auto" : ""
+          } text-xl`}
         >
-            »
+          »
         </Link>
-        </nav>
+      </nav>
     </div>
   );
 }

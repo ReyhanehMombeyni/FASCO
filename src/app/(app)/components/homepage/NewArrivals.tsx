@@ -1,4 +1,4 @@
-import { getCategories } from "@/src/actions/products";
+import { getCategories } from "@/src/services/products";
 import { ProductsSection } from "./ProductsSection";
 
 export const NewArrivalsSection = async () => {

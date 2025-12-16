@@ -1,20 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui";
-import { useFilteredProducts } from "@/src/hooks/useFilteredProducts";
 import { useState } from "react";
+import { useFilteredProducts } from "@/src/hooks/useFilteredProducts";
 import { ProductCard } from "./ProductCard";
+import { Category } from "@/src/types/core";
 
-interface Category {
-  id: string;
-  name: string;
-}
-
-interface ProductsSectionProps {
-  categories: Category[];
-}
-
-export const ProductsSection = ({ categories }: ProductsSectionProps) => {
+export const ProductsSection = ({ categories }: {categories: Category[]}) => {
   const [initialCategory, setInitialCategory] = useState(categories[1]);
   const { 
         filteredProducts, 

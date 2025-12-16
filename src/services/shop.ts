@@ -1,46 +1,8 @@
+'use server'
 import { createClient } from "@/src/supabase/server";
-import { Product } from "./products";
-interface Name {
-  id: string;
-  name: string;
-}
-export interface Size {
-  id: string;
-  name: string;
-  symbol: string;
-}
-export interface Color {
-  id: string;
-  name: string;
-  code: string;
-}
+import { GetFilteredProducts, GetFilteredProductsProps, ItemsFilter } from "../types/shop";
+import { FilterParams } from "../types/core";
 
-export interface ItemsFilter {
-  sizes: Size[] | [];
-  collections: Name[] | [];
-  brands: Name[] | [];
-  colors: Color[] | [];
-  tags: Name[] | [];
-}
-interface FilterParams {
-  size: string | null;
-  color: string | null;
-  brand: string | null;
-  collection: string | null;
-  tag: string | null;
-  range: string | null;
-}
-
-interface GetFilteredProductsProps {
-  filters: FilterParams;
-  currentPage: number;
-  ITEMS_PER_PAGE: number;
-}
-
-interface GetFilteredProducts {
-  products: Product[];
-  count: number;
-}
 
 export async function getItemsFilter(): Promise<ItemsFilter> {
   const supabase = await createClient();
