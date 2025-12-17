@@ -100,7 +100,7 @@ export const ProductDetail = ({
 
   return (
     <div className="space-y-3 md:space-y-5">
-      <ProductHeader name={name} rating={rating} reviews={reviews} />
+      <ProductHeader id={id} name={name} rating={rating} reviews={reviews} />
       <PriceDisplay
         price={price}
         discountedPrice={discountedPrice}

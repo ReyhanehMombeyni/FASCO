@@ -68,6 +68,7 @@ export interface SizeColorSectionProps {
 }
 
 export interface ProductHeaderProps {
+  id: string;
   name: string;
   rating: number;
   reviews: number;

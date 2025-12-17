@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Star } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui";
 import { Product } from "@/src/types/products";
+import { RatingStar } from "@/src/components/shared";
 
 export function ProductCard({ product }: { product: Product }) {
   const {
@@ -40,18 +41,7 @@ export function ProductCard({ product }: { product: Product }) {
           <h3 className="text-gray-700 text-sm sm:text-xl sm:font-medium md:text-2xl lg:text-lg lg:tracking-normal 2xl:text-2xl">
             {name}
           </h3>
-          <div className="flex items-center space-x-1">
-            {Array.from({ length: 5 }, (_, i) => (
-              <Star
-                key={i}
-                className={`w-2 h-2 sm:w-3 sm:h-3 xl:h-3.5 xl:w-3.5 2xl:w-4 2xl:h-4 ${
-                  i < Math.floor(rating)
-                    ? "fill-yellow-400 text-yellow-400"
-                    : "text-gray-300"
-                }`}
-              />
-            ))}
-          </div>
+          <RatingStar rating={rating} />
         </div>
         <p className="text-[8px] sm:text-[10px] xl:text-xs 2xl:text-sm text-gray-400">
           {brands?.name}

@@ -1,4 +1,4 @@
-'use server'
+"use server";
 import { createClient as createServerSupabaseClient } from "@/src/supabase/server";
 import { Product, ProductDetailType } from "../types/products";
 import { PaginatedData } from "../types/shop";
@@ -29,9 +29,12 @@ export async function getProductsByCategory(
     count,
   } = await supabase
     .from("products")
-    .select(`*, brands(name), stock_summary:product_stock_summary (
+    .select(
+      `*, brands(name), stock_summary:product_stock_summary (
             total_stock
-        )`, { count: "exact" })
+        )`,
+      { count: "exact" }
+    )
     .eq("category_id", categoryId)
     .order("created_at", { ascending: false })
     .range(offset, offset + limit - 1);
@@ -82,7 +85,8 @@ export async function getProductDetails(
 
   const { data, error } = await supabase
     .from("products")
-    .select(`*, product_sizes(
+    .select(
+      `*, product_sizes(
       sizes (
       id,
       name,
@@ -100,7 +104,8 @@ export async function getProductDetails(
           color_id, 
           stock_quantity
       )
-          `)
+          `
+    )
     .eq("id", productId)
     .single();
 
@@ -110,4 +115,41 @@ export async function getProductDetails(
   }
 
   return data as ProductDetailType;
+}
+
+export interface UserDisplayInfo {
+  username: string | null;
+}
+
+export interface ProductReview {
+  id: string;
+  product_id: string;
+  user_id: string;
+  rating: number;
+  comment: string | null;
+  helpful_count: number;
+  unhelpful_count: number;
+  created_at: string;
+  user: UserDisplayInfo | null;
+}
+export async function getReviewsProduct(
+  productId: string
+): Promise<ProductReview[] | null> {
+  const supabase = await createServerSupabaseClient();
+  const { data: reviews, error } = await supabase
+    .from("product_reviews")
+    .select( `
+    *,
+    user:user_display_info(username)
+  `
+    )
+    .eq("product_id", productId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching reviews:", error);
+  }
+// console.log(reviews);
+
+  return reviews as ProductReview[] | null;
 }

@@ -6,6 +6,7 @@ import { ParamsId } from "@/src/types/products";
 import { ProductDetail } from "@/src/app/(app)/components/productpage";
 import { DealsOfTheMonth, ProductShowcase } from "@/src/app/(app)/components/homepage";
 import { getActiveCampaignEndDate } from "@/src/services/deals";
+import { ReviewList } from "../../components/productpage/ReviewList";
 
 const axKocholo = [
   "inyki",
@@ -40,7 +41,7 @@ export default async function page({ params }: ParamsId) {
 
   return (
     <main>
-      <section className="p-5 pb-10 md:px-20 lg:px-30 md:pb-20">
+      <section className="p-5 pb-10 md:px-20 lg:px-30 md:pb-15">
         <p className="text-xs text-gray-500 mb-2 hidden sm:block">
           FASCO &rsaquo; {product.name}
         </p>
@@ -74,6 +75,7 @@ export default async function page({ params }: ParamsId) {
           />
         </div>
       </section>
+      <ReviewList id={id} />
       <ProductShowcase />
       <DealsOfTheMonth />
     </main>
