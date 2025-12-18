@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui";
+import { useState } from "react";
+import Link from "next/link";
+import { Heart, Search, ShoppingCart, User } from "lucide-react";
 import { LogoutButton } from "@/src/app/(auth)/components/LogoutButton";
 import { useUserStore } from "@/src/store";
-import { Heart, Search, ShoppingCart, User } from "lucide-react";
-import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,11 +12,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  Button
 } from "@/components/ui";
+import { CommentForm } from "./commentForm";
 
 export const RightNav = () => {
   const isLoggedIn = useUserStore((state) => state.isLoggedIn);
-  const user = useUserStore((state) => (state.user))
+  const user = useUserStore((state) => state.user);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
@@ -34,7 +42,7 @@ export const RightNav = () => {
 
             <DropdownMenuContent className="w-60" align="end">
               <DropdownMenuLabel className="text-lg font-serif">
-                {user ? user.username : "Hello User" }
+                {user ? user.username : "Hello User"}
               </DropdownMenuLabel>
 
               <DropdownMenuSeparator className="bg-gray-400" />
@@ -46,15 +54,30 @@ export const RightNav = () => {
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem
-                  className="text-red-600 cursor-pointer"
-                >
+                <DropdownMenuItem className="text-red-600 cursor-pointer">
                   <LogoutButton />
                 </DropdownMenuItem>
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Heart className="h-5 w-5 text-gray-700 cursor-pointer hover:text-black" />
+          <div>
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <button className="p-2 hover:bg-gray-100 rounded-full transition-all group outline-none">
+                  <Heart className="w-5 h-5 text-gray-600 group-hover:text-red-500 group-hover:fill-red-500" />
+                </button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-full sm:w-[450px] p-6">
+                <SheetHeader className="text-left mb-8">
+                  <SheetTitle className="font-serif text-xl">
+                    Customer Feedback
+                  </SheetTitle>
+                </SheetHeader>
+
+                <CommentForm onSuccess={() => setIsOpen(false)} />
+              </SheetContent>
+            </Sheet>
+          </div>
           <div className="relative cursor-pointer">
             <ShoppingCart className="h-5 w-5 text-gray-700 hover:text-black" />
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
@@ -75,4 +98,3 @@ export const RightNav = () => {
     </div>
   );
 };
-

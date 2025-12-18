@@ -35,7 +35,7 @@ export function DealSlider(discountedDetail: DiscountedDetail) {
       <div className="col-span-2 w-full relative">
         <Image
           src={currentItem.image_url}
-          alt={nameCompain}
+          alt={currentItem.name}
           className="transition-opacity duration-500 object-cover"
           fill
         />

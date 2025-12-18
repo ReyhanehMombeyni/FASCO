@@ -68,29 +68,6 @@ const supabase = createClient();
           <span>{dislikes}</span>
         </button>
       </div>
-      {/* <div className="flex items-center space-x-4">
-        <button 
-          onClick={() => handleAction("helpful")}
-          disabled={!!userAction}
-          className={`flex items-center space-x-1 text-xs transition-colors ${
-            userAction === "liked" ? "text-green-600" : "text-gray-500 hover:text-black"
-          }`}
-        >
-          <ThumbsUp className={`w-4 h-4 ${userAction === "liked" ? "fill-current" : ""}`} />
-          <span>{likes}</span>
-        </button>
-
-        <button 
-          onClick={() => handleAction("unhelpful")}
-          disabled={!!userAction}
-          className={`flex items-center space-x-1 text-xs transition-colors ${
-            userAction === "disliked" ? "text-red-600" : "text-gray-500 hover:text-black"
-          }`}
-        >
-          <ThumbsDown className={`w-4 h-4 ${userAction === "disliked" ? "fill-current" : ""}`} />
-          <span>{dislikes}</span>
-        </button>
-      </div> */}
     </div>
   );
 };

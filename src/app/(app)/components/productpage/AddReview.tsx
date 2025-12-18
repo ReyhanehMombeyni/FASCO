@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
+import { Star } from "lucide-react";
 import { createClient } from "@/src/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Star } from "lucide-react";
 
 export const AddReview = ({ productId }: { productId: string }) => {
   const [rating, setRating] = useState(0);
