@@ -52,7 +52,7 @@ export const CommentForm = ({ onSuccess }: {onSuccess?: () => void;}) => {
   };
 
   return (
-    <div className="flex flex-col h-full space-y-8">
+    <div className="flex flex-col h-full space-y-8 w-full">
       <div className="space-y-4">
         <Label className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
           How would you rate us?

@@ -6,9 +6,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useComments } from "@/src/hooks/useComments";
 
 export const TestimonialSlider = () => {
-  const { data: testimonials, loading } = useComments();
+  const { data: testimonials = [], isLoading } = useComments();
   const [currentIndex, setCurrentIndex] = useState(1);
   const totalSlides = testimonials.length;
+
+  if(totalSlides===0) return null;
 
   const goToNext = () => {
     if (currentIndex === 2) setCurrentIndex(0);
@@ -34,8 +36,8 @@ export const TestimonialSlider = () => {
         duis
       </p>
 
-      {loading ? (
-        <div>Comments is Loading...</div>
+      {isLoading ? (
+        <div className="mx-auto w-full">Comments is Loading...</div>
       ) : (
         <div className="relative w-full flex justify-center items-center">
           {testimonials.map((comment, index) => {

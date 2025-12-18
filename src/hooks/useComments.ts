@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { createClient } from "@/src/supabase/client";
 
 export interface CommentDisplay {
@@ -12,37 +12,26 @@ export interface CommentDisplay {
 }
 
 export const useComments = () => {
-  const [data, setData] = useState<CommentDisplay[] | []>([]);
-  const [loading, setLoading] = useState(true);
+  return useQuery({
+    queryKey: ["site_testimonials"], 
+    queryFn: async () => {
+      const supabase = createClient(); 
+      const { data, error } = await supabase
+        .from("site_testimonials")
+        .select(`
+          id,
+          rating,
+          quote,
+          created_at,
+          user:user_display_info(username)
+        `)
+        .eq("is_featured", true)
+        .order("created_at", { ascending: false });
 
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-      try {
-        const supabase = await createClient();
-        const { data: result, error: supabaseError } = await supabase.from("site_testimonials")
-          .select(`
-            id,
-            rating,
-            quote,
-            created_at,
-            user:user_display_info(username)
-          `)
-          .eq("is_featured", true)
-          .order("created_at", { ascending: false });
-
-        if (supabaseError) throw supabaseError;
-
-        setData((result as unknown as CommentDisplay[]));
-      } catch (err) {
-        setData([]);
-        console.error("Fetch Error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTestimonials();
-  }, []);
-
-  return { data, loading };
+      if (error) throw new Error(error.message);
+      
+      return data as unknown as CommentDisplay[];
+    },
+    staleTime: 1000 * 60 * 30,
+  });
 };

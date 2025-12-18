@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Poppins } from "next/font/google"; //, Oxanium
 import "./globals.css";
-import {QueryProvider} from "@/src/providers/QueryProvider"
+import { QueryProvider } from "@/src/providers/QueryProvider";
+import { AuthProvider } from "../providers/AuthProvider";
 
 const playfair = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-playfair',
-  display: 'swap',
-})
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-playfair",
+  display: "swap",
+});
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['300', '400', '600'],
-  variable: '--font-poppins',
-  display: 'swap',
-})
+  subsets: ["latin"],
+  weight: ["300", "400", "600"],
+  variable: "--font-poppins",
+  display: "swap",
+});
 
 // const oxanium = Oxanium({
 //   subsets: ['latin'],
@@ -35,10 +36,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.className} ${poppins.className} bg-white text-black`}>
+    <html
+      lang="en"
+      className={`${playfair.className} ${poppins.className} bg-white text-black`}
+    >
       <body>
         <QueryProvider>
-          {children}
+          <AuthProvider>{children}</AuthProvider>
         </QueryProvider>
       </body>
     </html>
