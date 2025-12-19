@@ -3,6 +3,7 @@ import { Playfair_Display, Poppins } from "next/font/google"; //, Oxanium
 import "./globals.css";
 import { QueryProvider } from "@/src/providers/QueryProvider";
 import { AuthProvider } from "../providers/AuthProvider";
+import { Toaster } from 'sonner';
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -42,7 +43,9 @@ export default function RootLayout({
     >
       <body>
         <QueryProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>{children}
+            <Toaster position="bottom-right" richColors />
+          </AuthProvider>
         </QueryProvider>
       </body>
     </html>

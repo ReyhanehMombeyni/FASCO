@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Heart, Search, ShoppingCart, User } from "lucide-react";
+import { Heart, Search, User } from "lucide-react";
 import { LogoutButton } from "@/src/app/(auth)/components/LogoutButton";
 import { useUserStore } from "@/src/store";
 import {
@@ -17,14 +17,37 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-  Button
+  Button,
+  Skeleton,
 } from "@/components/ui";
 import { CommentForm } from "./commentForm";
+import { CartDrawer } from "./CartDrawer";
 
 export const RightNav = () => {
+  const [mounted, setMounted] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const isLoggedIn = useUserStore((state) => state.isLoggedIn);
   const user = useUserStore((state) => state.user);
-  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="flex items-center space-x-5">
+        <div className="flex items-center space-x-6">
+          <Skeleton className="h-5 w-5 rounded-full" />
+          <Skeleton className="h-5 w-5 rounded-full" />
+          <Skeleton className="h-8 w-16" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -79,10 +102,7 @@ export const RightNav = () => {
             </Sheet>
           </div>
           <div className="relative cursor-pointer">
-            <ShoppingCart className="h-5 w-5 text-gray-700 hover:text-black" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-              1
-            </span>
+            <CartDrawer />
           </div>
         </div>
       ) : (

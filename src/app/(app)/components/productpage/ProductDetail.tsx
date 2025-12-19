@@ -12,6 +12,8 @@ import { StockAlert } from "./StockAlert";
 import { PresenceTracker } from "./PresenceTracker";
 import { TimerDisplay } from "./TimerDisplay";
 import { calculateDiscountedPrice } from "@/src/utils/price";
+import { useCartStore } from "@/src/store/useCartStore";
+import { toast } from "sonner";
 
 const LOW_STOCK_THRESHOLD = 50;
 
@@ -27,6 +29,8 @@ export const ProductDetail = ({
     product.product_colors[0]?.colors.id || null
   );
   const [viewerCount, setViewerCount] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const addItem = useCartStore((state) => state.addItem);
 
   const supabase = createClient();
 
@@ -53,6 +57,33 @@ export const ProductDetail = ({
 
   const sizeHandler = (id: string) => setSelectedSize(id);
   const colorHandler = (id: string) => setSelectedColor(id);
+  const increase = () => setQuantity((q) => q + 1);
+  const decrease = () => setQuantity((q) => Math.max(1, q - 1));
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value) || 1;
+    setQuantity(Math.max(1, Math.min(value, currentStock)));
+  };
+
+  const handleAddToCart = () => {
+    const color = product_colors.find(
+      (c) => c.colors.id === selectedColor
+    )?.colors;
+    const size = product_sizes.find((s) => s.sizes.id === selectedSize)?.sizes;
+
+    let main_price = price;
+    if (discount_percentage) main_price = Number(discountedPrice);
+
+    addItem({
+      id: `${product.id}-${selectedColor}-${selectedSize}`,
+      title: product.name,
+      price: main_price,
+      image: product.image_url,
+      size: size,
+      color: color,
+      quantity: quantity,
+    });
+    toast.success("Success! Added to cart.");
+  };
 
   useEffect(() => {
     const setupPresence = async () => {
@@ -129,9 +160,16 @@ export const ProductDetail = ({
       />
 
       <div className="flex space-x-4 pt-2 lg:pt-6">
-        <Counter currentStock={currentStock} />
+        <Counter
+          currentStock={currentStock}
+          quantity={quantity}
+          increase={increase}
+          decrease={decrease}
+          changeHandler={changeHandler}
+        />
         <Button
           size="sm"
+          onClick={() => handleAddToCart()}
           className="flex-1 bg-black text-white hover:bg-gray-800 transition-colors"
           disabled={!selectedSize || !selectedColor || currentStock === 0}
         >
