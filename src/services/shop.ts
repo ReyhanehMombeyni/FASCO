@@ -93,7 +93,6 @@ export async function getFilteredProducts(
   ), product_tags!inner(*)`,
       { count: "exact" }
     )
-    .range(start, end);
 
   const singleValueMap: { [key: string]: string } = {
     brand: "brand_id",

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { ChevronDown, List, Grid3X3, Grid2X2 } from "lucide-react";
 import { FilterSidebar, Pagination, ProductGrid } from "../components/shoppage";
 import { InstagramFeed, ProductShowcase } from "../components/homepage";
@@ -7,15 +7,16 @@ import { ItemsFilter, SearchParams } from "@/src/types/shop";
 
 const page = async ({ searchParams }: SearchParams) => {
 
-  const currentPage = Number((await searchParams).page) || 1;
+  const searParams = await searchParams;
+  const currentPage = Number(searParams.page) || 1;
   const ITEMS_PER_PAGE = 6;
   const filters = {
-    size: (await searchParams).size || null,
-    brand: (await searchParams).brand || null,
-    color: (await searchParams).color || null,
-    collection: (await searchParams).collection || null,
-    tag: (await searchParams).tag || null,
-    range: (await searchParams).range || null,
+    size: searParams.size || null,
+    brand: searParams.brand || null,
+    color: searParams.color || null,
+    collection: searParams.collection || null,
+    tag: searParams.tag || null,
+    range: searParams.range || null,
   };
 
   const itemsFilter: ItemsFilter = await getItemsFilter();

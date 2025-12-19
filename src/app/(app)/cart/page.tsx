@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Minus, Plus, X } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { useCartStore } from "@/src/store/useCartStore";
 import { Button, Separator } from "@/components/ui";
 

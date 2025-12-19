@@ -16,6 +16,10 @@ export const useFilterUpdater = () => {
             currentParams.delete(key);
         }
 
+        if (currentParams.has('page')) {
+            currentParams.delete('page');
+        }
+
         router.push(`?${currentParams.toString()}`, { scroll: false });
     }, [router, searchParams]);
 
