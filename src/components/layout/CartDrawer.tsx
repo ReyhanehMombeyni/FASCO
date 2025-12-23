@@ -11,19 +11,21 @@ import {
   SheetTrigger,
   Button,
   Separator,
+  SheetDescription,
 } from "@/components/ui";
 import Link from "next/link";
+import { useState } from "react";
 
 export const CartDrawer = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const { items, updateQuantity, removeItem, getTotalPrice, getItemCount } =
     useCartStore();
   const totalPrice = getTotalPrice();
   const freeShippingThreshold = 200;
   const remainingForFreeShipping = freeShippingThreshold - totalPrice;
-    
 
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <div className="relative cursor-pointer group">
           <ShoppingCart className="h-5 w-5 text-gray-700 hover:text-black" />
@@ -38,6 +40,9 @@ export const CartDrawer = () => {
       <SheetContent className="w-full sm:w-[450px] flex flex-col p-0">
         <SheetHeader className="p-6 pb-2 border-b">
           <SheetTitle className="text-2xl font-serif">Shopping Cart</SheetTitle>
+          <SheetDescription className="sr-only">
+            Review the items in your cart before checkout.
+          </SheetDescription>
           {totalPrice > 0 && (
             <div className="text-xs text-gray-500 mt-2">
               {remainingForFreeShipping > 0 ? (
@@ -66,13 +71,14 @@ export const CartDrawer = () => {
               <p>Your cart is empty</p>
             </div>
           ) : (
-            items.map(({id, image, title, color, size, price, quantity}) => (
+            items.map(({ id, image, title, color, size, price, quantity }) => (
               <div key={id} className="flex gap-4 group border-b pb-3">
                 <div className="relative h-28 w-24 bg-gray-50 shrink-0">
                   <Image
                     src={image}
                     alt={title}
                     fill
+                    sizes="96px"
                     className="object-cover"
                   />
                 </div>
@@ -99,7 +105,10 @@ export const CartDrawer = () => {
                     ></div>
                   </div>
                   <p className="text-[10px] text-gray-500 mt-1">
-                    Size: <span className="text-gray-900 font-semibold">{size?.symbol || "Standard"}</span>
+                    Size:{" "}
+                    <span className="text-gray-900 font-semibold">
+                      {size?.symbol || "Standard"}
+                    </span>
                   </p>
                   <p className="font-medium mt-1">${price}</p>
 
@@ -130,6 +139,7 @@ export const CartDrawer = () => {
               <input
                 type="checkbox"
                 id="wrap"
+                name="gift_wrap"
                 className="rounded border-gray-300 accent-black"
               />
               <label
@@ -149,17 +159,21 @@ export const CartDrawer = () => {
             </div>
 
             <div className="space-y-1">
-              <Button className="w-full bg-black text-white hover:bg-zinc-800 rounded-none h-8 uppercase tracking-widest text-xs">
-                Checkout
+              <Button
+                variant="link"
+                className="w-full bg-black text-white rounded-none h-8 uppercase tracking-widest text-xs"
+                onClick={() => setIsOpen(false)}
+                asChild
+              >
+                <Link href="/checkout">Checkout</Link>
               </Button>
               <Button
                 variant="link"
                 className="w-full text-black underline text-xs"
+                onClick={() => setIsOpen(false)}
                 asChild
               >
-                <Link href="/cart">
-                    View Cart
-                </Link>
+                <Link href="/cart">View Cart</Link>
               </Button>
             </div>
           </div>

@@ -1,27 +1,46 @@
 "use client";
 
 import { Button } from "@/components/ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFilteredProducts } from "@/src/hooks/useFilteredProducts";
 import { ProductCard } from "./ProductCard";
 import { Category } from "@/src/types/core";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ProductsSectionProps } from "@/src/types/products";
 
-export const ProductsSection = ({ categories }: {categories: Category[]}) => {
-  const [initialCategory, setInitialCategory] = useState(categories[1]);
-  const { 
-        filteredProducts, 
-        isLoading, 
-        loadMore, 
-        hasMore 
-    } = useFilteredProducts(initialCategory.id);
+export const ProductsSection = ( { categories, initialCategoryFromUrl }: ProductsSectionProps) => {
+  const [initialCategory, setInitialCategory] = useState(initialCategoryFromUrl || {id: '', name: ''});
+
+  const router = useRouter()
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('category');
+
+  const handleCategoryChange = (cat: Category) => {
+    setInitialCategory(cat);
+    router.push('/', { scroll: false }); 
+  };
+
+  const { filteredProducts, isLoading, loadMore, hasMore } = useFilteredProducts(initialCategory.id);
+
+  useEffect(() => {
+    if (categoryParam) {
+      const timer = setTimeout(() => {
+        const element = document.getElementById('new-arrivals-section');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150); 
+      return () => clearTimeout(timer);
+    }
+  }, [categoryParam]);
 
   return (
     <>
-      <div className="grid grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-5 mb-12">
+      <div id="new-arrivals-section" className="grid grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-5 mb-12">
         {categories.map(({ name, id }) => (
           <Button
             key={id}
-            onClick={() => setInitialCategory({ name, id })}
+            onClick={() => handleCategoryChange({ name, id })}
             variant={name === initialCategory.name ? "default" : "outline"}
             className={`text-[8px] sm:text-xs md:text-sm rounded-lg sm:py-4 md:py-5 border-none transition-colors 
                 ${
@@ -40,7 +59,7 @@ export const ProductsSection = ({ categories }: {categories: Category[]}) => {
         ))}
       </div>
       {isLoading ? (
-        <p className="col-span-3 text-center text-gray-500 text-xs md:text-sm lg:text-base">
+        <p className="col-span-3 text-center text-gray-500 text-xs md:text-sm 2xl:text-base">
           Loading products...
         </p>
       ) : (

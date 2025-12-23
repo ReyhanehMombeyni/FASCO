@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { Star } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui";
 import { Product } from "@/src/types/products";
 import { RatingStar } from "@/src/components/shared";
+import Link from "next/link";
 
 export function ProductCard({ product }: { product: Product }) {
   const {
+    id,
     name,
     price,
     rating,
@@ -33,26 +34,27 @@ export function ProductCard({ product }: { product: Product }) {
           alt={name}
           fill
           className="object-cover rounded-lg"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
         />
       </div>
 
       <CardContent className="p-0 m-0">
         <div className="flex justify-between gap-1 items-center">
-          <h3 className="text-gray-700 text-sm sm:text-xl sm:font-medium md:text-2xl lg:text-lg lg:tracking-normal 2xl:text-2xl">
-            {name}
+          <h3 className="text-gray-700 text-sm sm:text-base sm:font-medium md:text-lg lg:text-base lg:tracking-normal 2xl:text-lg">
+            <Link href={`/product/${id}`}>{name}</Link>
           </h3>
           <RatingStar rating={rating} />
         </div>
         <p className="text-[8px] sm:text-[10px] xl:text-xs 2xl:text-sm text-gray-400">
           {brands?.name}
         </p>
-        <p className="pt-2 text-[9px] sm:text-xs xl:text-sm text-gray-600 xl:py-5 2xl:text-lg">
+        <p className="pt-1 text-[9px] sm:text-xs 2xl:text-sm text-gray-600 xl:py-2">
           ({reviews}) Customer Reviews
         </p>
       </CardContent>
 
       <CardFooter className="flex justify-between items-center px-0 -my-2 sm:mb-1 xl:mb-3 2xl:mb-6">
-        <div className="text-md sm:text-lg xl:text-xl font-medium text-gray-800 2xl:text-2xl flex items-center space-x-3">
+        <div className="text-sm xl:text-base font-semibold text-gray-700 2xl:text-lg flex items-center space-x-3">
           <span>${(price - discountAmount).toFixed(2)}</span>
           {discount_percentage && (
             <span className="text-sm line-through text-gray-400">
@@ -71,6 +73,7 @@ export function ProductCard({ product }: { product: Product }) {
             ? "Almost Sold Out"
             : "In Stock"}
         </p>
+        
       </CardFooter>
     </Card>
   );

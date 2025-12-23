@@ -130,7 +130,7 @@ export const ProductDetail = ({
   }, [id, supabase]);
 
   return (
-    <div className="space-y-3 md:space-y-5">
+    <div className="space-y-3">
       <ProductHeader id={id} name={name} rating={rating} reviews={reviews} />
       <PriceDisplay
         price={price}
@@ -138,7 +138,7 @@ export const ProductDetail = ({
         discount_percentage={discount_percentage}
       />
 
-      <div className="mt-5 lg:mt-8">
+      <div className="mt-5">
         <PresenceTracker viewerCount={viewerCount} productId={id} />
 
         {discount_percentage > 0 && (
@@ -159,7 +159,7 @@ export const ProductDetail = ({
         colorHandler={colorHandler}
       />
 
-      <div className="flex space-x-4 pt-2 lg:pt-6">
+      <div className="flex space-x-4 pt-2 lg:pt-4">
         <Counter
           currentStock={currentStock}
           quantity={quantity}

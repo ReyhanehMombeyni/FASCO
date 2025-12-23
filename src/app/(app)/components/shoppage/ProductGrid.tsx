@@ -2,20 +2,27 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui";
-import { ProductDetailType } from "@/src/types/products";
+import { ShopProduct } from "@/src/types/products";
 
-const ProductCard = ({ product }: { product: ProductDetailType }) => {
+const ProductCard = ({ product }: { product: ShopProduct }) => {
   const availableColors = product.product_colors;
+
+  let discountAmount = 0;
+  if (product.discount_percentage) {
+    discountAmount = product.price * (product.discount_percentage / 100);
+  }
 
   return (
     <Card className="rounded-none border-none shadow-none p-0 m-0">
       <CardContent className="p-0 m-0">
-        <div className="relative h-35 sm:h-50 md:h-60 lg:h-70 xl:h-85 2xl:h-100 w-full bg-yellow-900 overflow-hidden">
+        <div className="relative h-35 sm:h-50 md:h-60 lg:h-70 xl:h-85 2xl:h-100 w-full bg-gray-300 overflow-hidden">
           <Image
             src={product.image_url}
             alt={product.name}
             fill
+            priority
             className="object-cover"
+            sizes="(max-width: 768px) 33vw, (max-width: 1200px) 30vw, 400px"
           />
         </div>
 
@@ -23,9 +30,14 @@ const ProductCard = ({ product }: { product: ProductDetailType }) => {
           <h1 className="text-[8px] font-medium tracking-tighter sm:text-[10px] sm:tracking-normal sm:py-1 md:text-xs md:tracking-tighte lg:text-sm xl:text-lg xl:tracking-normal xl:py-2 2xl:text-xl hover:text-gray-500 transition-colors cursor-pointer">
             <Link href={`/product/${product.id}`}>{product.name}</Link>
           </h1>
-          <p className="text-[7px] sm:text-[9px] md:text-xs lg:text-sm xl:text-base 2xl:text-base">
-            <span className="text-gray-800">${product.price.toFixed(2)}</span>
-          </p>
+          <div className="text-[7px] sm:text-[9px] md:text-xs lg:text-sm xl:text-base 2xl:text-base text-gray-800 flex items-center gap-2">
+            <span>${(product.price - discountAmount).toFixed(2)}</span>
+            {product.discount_percentage && (
+              <span className="text-sm line-through text-gray-400">
+                ${product.price.toFixed(2)}
+              </span>
+            )}
+          </div>
 
           <div className="lg:pt-2 flex items-center gap-0.5">
             {availableColors &&
@@ -43,7 +55,7 @@ const ProductCard = ({ product }: { product: ProductDetailType }) => {
   );
 };
 
-export function ProductGrid({ products }: { products: ProductDetailType[] }) {
+export function ProductGrid({ products }: { products: ShopProduct[] }) {
   return (
     <div className="grid grid-cols-3 gap-x-2 gap-y-3 lg:gap-x-5 lg:gap-y-7 xl:gap-x-10 xl:gap-y-12">
       {products.map((product) => (

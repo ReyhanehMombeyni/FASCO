@@ -7,7 +7,8 @@ const page = () => {
   return (
     <main className="m-10 lg:my-15 lg:mx-30 xl:mx-40 border-gray-200 border md:grid lg:grid-cols-3 items-center">
       <div className="hidden lg:block relative h-full lg:col-span-1">
-        <Image src={signupImg} alt="My photo" fill className="object-cover" />
+        <Image src={signupImg} alt="FASCO fashion authentication" fill className="object-cover" priority
+    sizes="(max-width: 1024px) 0vw, 33vw" />
       </div>
       <div className="flex flex-col justify-between items-left px-5 py-5 w-full lg:col-span-2">
         <Logo />

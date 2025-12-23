@@ -1,5 +1,5 @@
 import { Name, Size, Color, FilterParams } from "./core";
-import { ProductDetailType, ProductWithCategory } from "./products";
+import { ProductWithCategory, ShopProduct } from "./products";
 
 export interface ItemsFilter {
   sizes: Size[] | [];
@@ -10,7 +10,7 @@ export interface ItemsFilter {
 }
 
 export interface GetFilteredProducts {
-  products: ProductDetailType[];
+  products: ShopProduct[];
   count: number;
 }
 

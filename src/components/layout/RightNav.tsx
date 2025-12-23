@@ -19,6 +19,7 @@ import {
   SheetTrigger,
   Button,
   Skeleton,
+  SheetDescription,
 } from "@/components/ui";
 import { CommentForm } from "./commentForm";
 import { CartDrawer } from "./CartDrawer";
@@ -95,6 +96,10 @@ export const RightNav = () => {
                   <SheetTitle className="font-serif text-xl">
                     Customer Feedback
                   </SheetTitle>
+                  <SheetDescription className="text-sm text-gray-500">
+                    Please share your thoughts with us to help us improve our
+                    services.
+                  </SheetDescription>
                 </SheetHeader>
 
                 <CommentForm onSuccess={() => setIsOpen(false)} />

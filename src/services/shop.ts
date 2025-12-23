@@ -2,6 +2,7 @@
 import { createClient } from "@/src/supabase/server";
 import { GetFilteredProducts, GetFilteredProductsProps, ItemsFilter } from "../types/shop";
 import { FilterParams } from "../types/core";
+import { ShopProduct } from "../types/products";
 
 
 export async function getItemsFilter(): Promise<ItemsFilter> {
@@ -84,7 +85,7 @@ export async function getFilteredProducts(
   let query = supabase
     .from("products")
     .select(
-      `*, product_sizes!inner(*), product_colors!inner(
+      `id, name, image_url, price, discount_percentage, product_sizes!inner(*), product_colors!inner(
     colors (
       id,
       name,
@@ -143,5 +144,5 @@ export async function getFilteredProducts(
     return { products: [], count: 0 };
   }
 
-  return { products: products || [], count: count || 0 };
+  return { products: (products as unknown as ShopProduct[]) || [], count: count || 0 };
 }

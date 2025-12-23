@@ -32,7 +32,7 @@ export const BrandMarquee = () => {
             key={index} 
             className="shrink-0 mx-8 whitespace-nowrap"
           >
-            <Image src={brand} alt="image brand" width={170} height={50} />
+            <Image src={brand} alt="image brand" width={170} height={50} style={{ width: 'auto', height: 'auto' }} />
           </span>
         ))}
       </div>

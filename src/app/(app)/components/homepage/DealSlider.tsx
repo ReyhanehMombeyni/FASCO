@@ -38,6 +38,7 @@ export function DealSlider(discountedDetail: DiscountedDetail) {
           alt={currentItem.name}
           className="transition-opacity duration-500 object-cover"
           fill
+          sizes="(max-width: 768px) 40vw, (max-width: 1200px) 35vw, 450px"
         />
         <div className="absolute bottom-2 md:bottom-5 py-2 px-1 w-full lg:bottom-10 lg:p-4 text-center bg-gray-200 opacity-90"> 
           <div className="text-[6px] sm:text-[9px] lg:text-sm lg:font-medium">
@@ -62,6 +63,7 @@ export function DealSlider(discountedDetail: DiscountedDetail) {
                     alt={id}
                     className="transition-opacity duration-500 object-cover ml-1 sm:ml-4"
                     fill
+                    sizes="(max-width: 768px) 30vw, (max-width: 1200px) 25vw, 300px"
                   />
                 </div>
               )

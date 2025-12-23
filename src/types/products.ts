@@ -8,6 +8,10 @@ interface SizesProduct {
   sizes: Size;
 }
 
+interface TagsProduct {
+  tags: Name;
+}
+
 interface StockSummary {
   total_stock: number;
 }
@@ -19,11 +23,18 @@ export interface ProductInventory {
 }
 
 export interface DiscountedProduct {
-    id: string;
-    name: string;
-    image_url: string;
-    discount_percentage: number;
-};
+  id: string;
+  name: string;
+  image_url: string;
+  discount_percentage: number;
+}
+
+export interface ShopProduct extends DiscountedProduct {
+  price: number;
+  product_colors: ColorsProduct[] | [];
+  product_sizes: { id: string }[];
+  product_tags: { id: string }[];
+}
 
 export interface Product extends DiscountedProduct {
   description: string;
@@ -31,7 +42,7 @@ export interface Product extends DiscountedProduct {
   rating: number;
   reviews: number;
   brands: Name;
-  stock_summary: StockSummary[] | []; 
+  stock_summary: StockSummary[] | [];
 }
 
 export interface ProductDetailType extends Product {
@@ -42,6 +53,7 @@ export interface ProductDetailType extends Product {
 
 export interface ProductsSectionProps {
   categories: Category[];
+  initialCategoryFromUrl: Category;
 }
 
 export interface ProductWithCategory extends Product {
@@ -96,7 +108,7 @@ export interface StockAlertProps {
 //   rating: number;
 //   image_url: string;
 //   discount_percentage: number;
-//   reviews: number; 
+//   reviews: number;
 // }
 
 // export interface Product {

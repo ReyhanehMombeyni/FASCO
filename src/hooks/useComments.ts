@@ -1,15 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createClient } from "@/src/supabase/client";
-
-export interface CommentDisplay {
-  id: string;
-  rating: number;
-  quote: string;
-  created_at: string;
-  user: {
-    username: string;
-  } | null;
-}
+import { CommentDisplay } from "../types/homepage";
 
 export const useComments = () => {
   return useQuery({

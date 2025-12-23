@@ -15,13 +15,15 @@ export function HeroHeader() {
           src={LeftMen}
           alt="Man standing"
           fill
+          priority
+          sizes="(max-width: 1024px) 0vw, 33vw"
           className="object-contain pt-10"
         />
       </div>
 
       <div className="flex flex-col justify-between bg-white">
         <div className="flex items-end justify-center bg-gray-200 rounded-2xl h-35">
-          <Image src={Womens} alt="Womens" width={360} height={200} className="rounded-2xl" />
+          <Image src={Womens} priority alt="Womens" width={360} height={200} className="rounded-2xl" style={{ height: 'auto' }} />
         </div>
 
         <div className="text-center py-10">
@@ -51,6 +53,8 @@ export function HeroHeader() {
             alt="Bottom models"
             width={300}
             height={200}
+            priority
+            style={{ width: 'auto', height: 'auto' }}
           />
         </div>
       </div>
@@ -60,6 +64,8 @@ export function HeroHeader() {
           src={RightMen}
           alt="Man standing"
           fill
+          priority
+          sizes="(max-width: 1024px) 0vw, 33vw"
           className="object-contain"
         />
       </div>

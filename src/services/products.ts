@@ -149,7 +149,43 @@ export async function getReviewsProduct(
   if (error) {
     console.error("Error fetching reviews:", error);
   }
-// console.log(reviews);
 
   return reviews as ProductReview[] | null;
+}
+
+export async function getShowcaseProduct() {
+  const supabase = await createServerSupabaseClient();
+  const { data } = await supabase
+    .from('products')
+     .select(
+      `*,collections(name), sizes(symbol)`
+    )
+    .eq('name', "Peaky Blinders")
+    .single(); 
+    
+  return data;
+}
+
+export async function getLatestProductsImages() {
+  try {
+    const supabase = await createServerSupabaseClient();
+
+    const { data: products, error: productsError } = await supabase
+      .from("products")
+      .select("id, name, image_url")
+      .order("created_at", { ascending: false }) 
+      .limit(10); 
+    if (productsError) {
+      throw new Error(productsError.message);
+    }
+
+    return products.map((p) => ({
+      src: p.image_url,
+      alt: p.name,
+      id: p.id,
+    }));
+  } catch (error) {
+    console.error("Error in getLatestProductsImages:", error);
+    return [];
+  }
 }

@@ -1,9 +1,9 @@
 import { RatingStar } from '@/src/components/shared';
-import { CommentDisplay } from '@/src/hooks/useComments';
 import User from '@/public/images/homepage/user.png'
 import Image from 'next/image';
+import { TestimonialCardProps } from '@/src/types/homepage';
 
-export const TestimonialCard = ({ comment, isActive }: {comment: CommentDisplay; isActive: boolean;}) => {
+export const TestimonialCard = ({ comment, isActive }: TestimonialCardProps ) => {
   const { quote, rating,  created_at, user } = comment;
 
   return (
@@ -14,7 +14,7 @@ export const TestimonialCard = ({ comment, isActive }: {comment: CommentDisplay;
         ${isActive ? 'opacity-100' : 'opacity-80 overflow-x-auto'}
       `}>
         <div className='hidden lg:block relative w-30 h-30  xl:3-40 xl:w-40 xl:mb-5'>
-          <Image src={User} alt="user" fill className="object-contain" />
+          <Image src={User} alt="user" fill className="object-contain" sizes="(max-width: 1024px) 0vw, (max-width: 1280px) 120px, 160px" />
         </div>
         <div className='flex flex-col items-center'>
 

@@ -1,3 +1,4 @@
+import { LucideIcon } from "lucide-react";
 import { DiscountedProduct } from "./products";
 
 export interface TimeValues {
@@ -29,6 +30,38 @@ export interface TimerProps {
 export interface DiscountedDetail {
   nameCompain: string;
   discountedProducts: DiscountedProduct[];
+}
+
+export interface SearchParamsProp {
+  category?: string;
+}
+
+export interface FeatureCardProps {
+  icon: LucideIcon;
+  title: string;
+  subtitle: string;
+}
+
+export interface CommentDisplay {
+  id: string;
+  rating: number;
+  quote: string;
+  created_at: string;
+  user: {
+    username: string;
+  } | null;
+}
+
+export interface TestimonialCardProps {
+  comment: CommentDisplay;
+  isActive: boolean;
+}
+
+export interface InstagramCarsoulProps {
+  images: {src: string;
+    alt: string;
+    id: string;
+  } []
 }
 
 // import { LucideIcon } from "lucide-react";

@@ -23,7 +23,7 @@ export async function DealsOfTheMonth() {
           </p>
           
           <Button className="text-[10px] py-4 sm:px-5 sm:text-xs md:px-8 md:py-5 md:text-sm lg:px-10 lg:py-7 lg:text-lg">
-            <Link href="/shop">Buy Now</Link>
+            <Link href="/?category=discount-deals">Buy Now</Link>
           </Button>
 
           <div className="pt-4 sm:pt-10 space-y-4">
