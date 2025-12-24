@@ -2,11 +2,11 @@ import Image, { StaticImageData } from "next/image"
 
 export interface HeaderProps {
         src: StaticImageData;
-        title: string;
-        description: string;
+        title?: string;
+        description?: string;
     }
 
-export const HeaderSection = ({src, title, description}: HeaderProps) => {
+export const HeaderSection = ({src, title="", description=""}: HeaderProps) => {
     
   return (
     <section className="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">

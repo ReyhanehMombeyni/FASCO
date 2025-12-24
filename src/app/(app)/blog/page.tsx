@@ -22,7 +22,9 @@ export default function BlogPage() {
                 />
               </div>
               <div className="p-5 pb-7">
-                <h2 className="text-lg font-medium mb-2">{title}</h2>
+                <h2 className="text-lg font-medium mb-2"><Link href={`/blog/${id}`}>
+                  {title}
+                </Link></h2>
                 <p className="text-xs md:text-sm text-gray-500 mb-4">{`${excerpt.slice(0,215)} ...`}</p>
                 <Link href={`/blog/${id}`} className="text-black font-semibold border-b border-black pb-1">
                   Read More
