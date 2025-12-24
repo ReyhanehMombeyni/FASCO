@@ -9,7 +9,7 @@ export interface HeaderProps {
 export const HeaderSection = ({src, title="", description=""}: HeaderProps) => {
     
   return (
-    <section className="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">
+    <section className="relative h-[50vh] lg:h-[60vh] w-full flex items-center justify-center overflow-hidden">
         <Image
           src={src}
           alt="FASCO Branding"

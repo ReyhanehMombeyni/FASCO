@@ -32,7 +32,7 @@ export function DealSlider(discountedDetail: DiscountedDetail) {
 
   return (
     <div className="relative w-full h-60 sm:h-70 md:h-80 lg:h-[500px] overflow-hidden grid grid-cols-5">
-      <div className="col-span-2 w-full relative">
+      <div className="col-span-2 w-full relative shadow-2xs">
         <Image
           src={currentItem.image_url}
           alt={currentItem.name}
@@ -56,7 +56,7 @@ export function DealSlider(discountedDetail: DiscountedDetail) {
               index !== currentIndex + 1 && (
                 <div
                   key={id}
-                  className="relative min-w-[60%] overflow-hidden"
+                  className="relative min-w-[60%] overflow-hidden shadow-2xs"
                 >
                   <Image
                     src={image_url}

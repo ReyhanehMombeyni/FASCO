@@ -30,10 +30,10 @@ const ProductCard = ({ product }: { product: ShopProduct }) => {
           <h1 className="text-[8px] font-medium tracking-tighter sm:text-[10px] sm:tracking-normal sm:py-1 md:text-xs md:tracking-tighte lg:text-sm xl:text-lg xl:tracking-normal xl:py-2 2xl:text-xl hover:text-gray-500 transition-colors cursor-pointer">
             <Link href={`/product/${product.id}`}>{product.name}</Link>
           </h1>
-          <div className="text-[7px] sm:text-[9px] md:text-xs lg:text-sm xl:text-base 2xl:text-base text-gray-800 flex items-center gap-2">
+          <div className="text-[7px] sm:text-[9px] md:text-xs lg:text-sm xl:text-base text-gray-800 flex items-center gap-2">
             <span>${(product.price - discountAmount).toFixed(2)}</span>
             {product.discount_percentage && (
-              <span className="text-sm line-through text-gray-400">
+              <span className="text-[6px] sm:text-[8px] md:text-[10px] lg:text-xs xl:text-sm line-through text-gray-400">
                 ${product.price.toFixed(2)}
               </span>
             )}

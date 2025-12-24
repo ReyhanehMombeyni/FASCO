@@ -40,7 +40,7 @@ export function ProductCard({ product }: { product: Product }) {
 
       <CardContent className="p-0 m-0">
         <div className="flex justify-between gap-1 items-center">
-          <h3 className="text-gray-700 text-sm sm:text-base sm:font-medium md:text-lg lg:text-base lg:tracking-normal 2xl:text-lg">
+          <h3 className="text-gray-700 text-xs tracking-tighter sm:tracking-normal sm:text-base sm:font-medium md:text-lg lg:text-base lg:tracking-normal 2xl:text-lg">
             <Link href={`/product/${id}`}>{name}</Link>
           </h3>
           <RatingStar rating={rating} />
@@ -54,7 +54,7 @@ export function ProductCard({ product }: { product: Product }) {
       </CardContent>
 
       <CardFooter className="flex justify-between items-center px-0 -my-2 sm:mb-1 xl:mb-3 2xl:mb-6">
-        <div className="text-sm xl:text-base font-semibold text-gray-700 2xl:text-lg flex items-center space-x-3">
+        <div className="text-xs xl:text-base text-gray-700 2xl:text-lg flex items-center space-x-3">
           <span>${(price - discountAmount).toFixed(2)}</span>
           {discount_percentage && (
             <span className="text-sm line-through text-gray-400">

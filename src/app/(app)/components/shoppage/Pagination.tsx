@@ -48,7 +48,7 @@ export function Pagination({
               page === currentPage
                 ? "bg-gray-100 px-2 rounded-full cursor-auto"
                 : ""
-            }`}
+            } text-xs lg:text-base`}
           >
             {page}
           </Link>

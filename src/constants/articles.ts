@@ -1,7 +1,6 @@
 import jean from "@/public/images/blog/jean.jpg";
 import accessories from "@/public/images/blog/acce.jpg";
 import inverno from "@/public/images/blog/inverno.jpg";
-import clothing from "@/public/images/blog/clothing.jpg"
 import { StaticImageData } from "next/image";
 
 export interface ArticlesType {

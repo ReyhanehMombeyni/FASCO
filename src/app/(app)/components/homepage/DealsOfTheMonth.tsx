@@ -21,9 +21,9 @@ export async function DealsOfTheMonth() {
           <p className="text-[8px] md:text-xs text-muted-foreground lg:text-sm max-w-sm">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
-          
+
           <Button className="text-[10px] py-4 sm:px-5 sm:text-xs md:px-8 md:py-5 md:text-sm lg:px-10 lg:py-7 lg:text-lg">
-            <Link href="/?category=discount-deals">Buy Now</Link>
+            <Link href="/?category=discount-deals#new-arrivals" scroll={false}>Buy Now</Link>
           </Button>
 
           <div className="pt-4 sm:pt-10 space-y-4">

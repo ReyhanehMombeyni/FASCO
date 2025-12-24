@@ -12,7 +12,7 @@ const page = async ({ params }: ParamsId) => {
     const {title, excerpt, image_url} = article;
 
   return (
-    <main className="min-h-screen bg-white mx-auto px-5 md:px-20 lg:px-30 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-5 lg:pt-20">
+    <main className="min-h-screen bg-white mx-auto px-5 md:px-20 lg:px-30 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-5 lg:pt-20 pb-20">
           <div className="lg:col-span-5 w-full">
             <div className="relative aspect-4/3 lg:aspect-3/4 w-full overflow-hidden rounded-2xl shadow-sm">
               <Image

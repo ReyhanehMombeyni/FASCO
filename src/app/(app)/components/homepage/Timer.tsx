@@ -30,7 +30,7 @@ const calculateTimeLeft = (targetDate: string): TimeLeft => {
 
 const TimerBlock = ({ value, label, type }: TimerBlockProps) => (
   <div className="flex flex-col items-center">
-    <div className={`${type=== "DealsOfTheMonth" ? "w-7 p-1 rounded-md sm:rounded-lg sm:w-8 md:font-lg md:w-10 lg:text-2xl lg:font-semibold lg:p-2 lg:w-16 bg-red-200" : ""} text-xs sm:text-base text-red-700 text-center opacity-80`}>
+    <div className={`${type=== "DealsOfTheMonth" ? "w-6 p-1 rounded-md sm:rounded-lg sm:w-8 md:font-lg md:w-10 lg:text-2xl lg:font-semibold lg:p-2 lg:w-16 bg-red-200" : ""} text-xs sm:text-base text-red-700 text-center opacity-80`}>
       <span>
         {value}
       </span>

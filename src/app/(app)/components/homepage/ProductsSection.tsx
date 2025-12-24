@@ -17,23 +17,25 @@ export const ProductsSection = ( { categories, initialCategoryFromUrl }: Product
 
   const handleCategoryChange = (cat: Category) => {
     setInitialCategory(cat);
-    router.push('/', { scroll: false }); 
+    router.push('/', { scroll: false });
   };
 
   const { filteredProducts, isLoading, loadMore, hasMore } = useFilteredProducts(initialCategory.id);
 
   useEffect(() => {
+    const activeCategory = categories.find(c => (categoryParam === "discount-deals" ? c.name === "Discount Deals" : c.name === categoryParam)) || categories[1];
     if (categoryParam) {
       const timer = setTimeout(() => {
+        setInitialCategory(activeCategory);
         const element = document.getElementById('new-arrivals-section');
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-      }, 150); 
+      }, 150);
       return () => clearTimeout(timer);
     }
-  }, [categoryParam]);
-
+  }, [categoryParam, categories]);
+  
   return (
     <>
       <div id="new-arrivals-section" className="grid grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-5 mb-12">
