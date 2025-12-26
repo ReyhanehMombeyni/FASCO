@@ -2,15 +2,16 @@ import { Name, Color, Size, Category } from "./core";
 
 interface ColorsProduct {
   colors: Color;
+  image_url: string;
 }
 
 interface SizesProduct {
   sizes: Size;
 }
 
-interface TagsProduct {
-  tags: Name;
-}
+// interface TagsProduct {
+//   tags: Name;
+// }
 
 interface StockSummary {
   total_stock: number;
@@ -95,6 +96,14 @@ export interface PriceDisplayProps {
 export interface StockAlertProps {
   currentStock: number;
   LOW_STOCK_THRESHOLD: number;
+}
+
+export interface ProductSearch {
+  id: string;
+  name: string;
+  image_url: string;
+  brand_name: string;
+  collection_name: string;
 }
 
 //products.ts

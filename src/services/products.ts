@@ -93,15 +93,16 @@ export async function getProductDetails(
       symbol
     )
       ), product_colors(
+      image_url,
       colors (
       id,
       name,
       code
     )
-      ), 
+      ),
       product_inventory (
-          size_id, 
-          color_id, 
+          size_id,
+          color_id,
           stock_quantity
       )
           `

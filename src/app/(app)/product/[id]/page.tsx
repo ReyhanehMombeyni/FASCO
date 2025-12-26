@@ -1,14 +1,15 @@
+import { Suspense } from "react";
 import { ParamsId } from "@/src/types/products";
 import {
   DealsOfTheMonth,
   ProductShowcase
 } from "@/src/app/(app)/components/homepage";
 import { ReviewList } from "../../components/productpage/ReviewList";
-import { Suspense } from "react";
-import { DealsOfTheMonthSkeleton, ProductPageSkeleton } from "../../components/skeleton";
 import { ProductContent } from "../../components/productpage";
+import { DealsOfTheMonthSkeleton, ProductPageSkeleton } from "../../components/skeleton";
 
 export default async function page({ params }: ParamsId) {
+
   return (
     <main>
       <Suspense fallback={<ProductPageSkeleton />}>

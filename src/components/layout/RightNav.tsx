@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Heart, Search, User } from "lucide-react";
+import { Heart, User } from "lucide-react";
 import { LogoutButton } from "@/src/app/(auth)/components/LogoutButton";
 import { useUserStore } from "@/src/store";
 import {
@@ -23,6 +23,7 @@ import {
 } from "@/components/ui";
 import { CommentForm } from "./commentForm";
 import { CartDrawer } from "./CartDrawer";
+import { SearchDrawer } from "./SearchDrawer";
 
 export const RightNav = () => {
   const [mounted, setMounted] = useState(false);
@@ -54,7 +55,7 @@ export const RightNav = () => {
     <div>
       {isLoggedIn ? (
         <div className="flex items-center space-x-4">
-          <Search className="h-5 w-5 text-gray-700 cursor-pointer hover:text-black" />
+          <SearchDrawer />
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

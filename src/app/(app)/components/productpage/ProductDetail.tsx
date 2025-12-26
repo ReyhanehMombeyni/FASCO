@@ -14,6 +14,7 @@ import { TimerDisplay } from "./TimerDisplay";
 import { calculateDiscountedPrice } from "@/src/utils/price";
 import { useCartStore } from "@/src/store/useCartStore";
 import { toast } from "sonner";
+import { ProductGallery } from "./ProductGallery";
 
 const LOW_STOCK_THRESHOLD = 50;
 
@@ -22,6 +23,7 @@ export const ProductDetail = ({
   discountAmount,
   campaignEndDate,
 }: ProductDetailProps) => {
+  
   const [selectedSize, setSelectedSize] = useState<string | null>(
     product.product_sizes[0]?.sizes.id || null
   );
@@ -52,6 +54,7 @@ export const ProductDetail = ({
         variant.size_id === selectedSize && variant.color_id === selectedColor
     );
   }, [product_inventory, selectedSize, selectedColor]);
+
   const currentStock = currentVariant?.stock_quantity || 0;
   const discountedPrice = calculateDiscountedPrice(price, discountAmount);
 
@@ -130,51 +133,63 @@ export const ProductDetail = ({
   }, [id, supabase]);
 
   return (
-    <div className="space-y-3">
-      <ProductHeader id={id} name={name} rating={rating} reviews={reviews} />
-      <PriceDisplay
-        price={price}
-        discountedPrice={discountedPrice}
-        discount_percentage={discount_percentage}
-      />
-
-      <div className="mt-5">
-        <PresenceTracker viewerCount={viewerCount} productId={id} />
-
-        {discount_percentage > 0 && (
-          <TimerDisplay campaignEndDate={campaignEndDate} />
-        )}
-      </div>
-
-      <StockAlert
-        currentStock={currentStock}
-        LOW_STOCK_THRESHOLD={LOW_STOCK_THRESHOLD}
-      />
-      <SizeColorSection
-        sizes={product_sizes}
-        size={selectedSize}
-        sizeHandler={sizeHandler}
-        colors={product_colors}
-        color={selectedColor}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-15">
+      <ProductGallery
+        mainImage={product.image_url}
+        colorImages={product.product_colors.map((pc) => ({
+          color_id: pc.colors.id,
+          image_url: pc.image_url,
+        }))}
+        selectedColorId={selectedColor}
+        productName={product.name}
         colorHandler={colorHandler}
       />
-
-      <div className="flex space-x-4 pt-2 lg:pt-4">
-        <Counter
-          currentStock={currentStock}
-          quantity={quantity}
-          increase={increase}
-          decrease={decrease}
-          changeHandler={changeHandler}
+      <div className="space-y-3">
+        <ProductHeader id={id} name={name} rating={rating} reviews={reviews} />
+        <PriceDisplay
+          price={price}
+          discountedPrice={discountedPrice}
+          discount_percentage={discount_percentage}
         />
-        <Button
-          size="sm"
-          onClick={() => handleAddToCart()}
-          className="flex-1 bg-black text-white hover:bg-gray-800 transition-colors"
-          disabled={!selectedSize || !selectedColor || currentStock === 0}
-        >
-          Add to cart
-        </Button>
+
+        <div className="mt-5">
+          <PresenceTracker viewerCount={viewerCount} productId={id} />
+
+          {discount_percentage > 0 && (
+            <TimerDisplay campaignEndDate={campaignEndDate} />
+          )}
+        </div>
+
+        <StockAlert
+          currentStock={currentStock}
+          LOW_STOCK_THRESHOLD={LOW_STOCK_THRESHOLD}
+        />
+        <SizeColorSection
+          sizes={product_sizes}
+          size={selectedSize}
+          sizeHandler={sizeHandler}
+          colors={product_colors}
+          color={selectedColor}
+          colorHandler={colorHandler}
+        />
+
+        <div className="flex space-x-4 pt-2 lg:pt-4">
+          <Counter
+            currentStock={currentStock}
+            quantity={quantity}
+            increase={increase}
+            decrease={decrease}
+            changeHandler={changeHandler}
+          />
+          <Button
+            size="sm"
+            onClick={() => handleAddToCart()}
+            className="flex-1 bg-black text-white hover:bg-gray-800 transition-colors"
+            disabled={!selectedSize || !selectedColor || currentStock === 0}
+          >
+            Add to cart
+          </Button>
+        </div>
       </div>
     </div>
   );

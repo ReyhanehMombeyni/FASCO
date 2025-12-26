@@ -57,7 +57,7 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="text-xs xl:text-base text-gray-700 2xl:text-lg flex items-center space-x-3">
           <span>${(price - discountAmount).toFixed(2)}</span>
           {discount_percentage && (
-            <span className="text-sm line-through text-gray-400">
+            <span className="text-[10px] md:text-xs xl:text-base line-through text-gray-400">
               ${price.toFixed(2)}
             </span>
           )}
@@ -73,7 +73,7 @@ export function ProductCard({ product }: { product: Product }) {
             ? "Almost Sold Out"
             : "In Stock"}
         </p>
-        
+
       </CardFooter>
     </Card>
   );
