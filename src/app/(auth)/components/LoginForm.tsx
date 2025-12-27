@@ -103,7 +103,7 @@ export const LoginForm = () => {
             <Button
               type="submit"
               size="sm"
-              className="w-full text-sm md:text-md font-light h-10 md:h-12"
+              className="w-full text-sm md:text-md font-light h-10 md:h-12 bg-black text-white"
               disabled={isPending}
             >
               {isPending ? "Sending" : "Sign In"}

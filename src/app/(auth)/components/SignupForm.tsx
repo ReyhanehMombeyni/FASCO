@@ -130,7 +130,7 @@ export const SignupForm = () => {
 
           <Button
             type="submit"
-            className="w-full text-sm h-10 md:text-md font-light md:h-12 mt-4"
+            className="w-full text-sm h-10 md:text-md font-light md:h-12 mt-4 bg-black text-white"
             disabled={isPending}
           >
             {isPending ? "Sending" : "Create Account"}

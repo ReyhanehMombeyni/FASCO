@@ -8,16 +8,12 @@ export async function GET(request: Request) {
   if (code) {
     const supabase = await createClient()
     
-    // **عملیات اصلی: تبادل کد با سشن**
-    // این متد کوکی‌های سوپابیس (Access Token, Refresh Token) را در مرورگر تنظیم می‌کند.
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     
     if (!error) {
-      // ریدایرکت به مسیر اصلی پس از لاگین موفق
       return NextResponse.redirect(requestUrl.origin)
     }
   }
 
-  // در صورت خطا در احراز هویت، به صفحه لاگین بازگردانده شود.
   return NextResponse.redirect(`${requestUrl.origin}/login?error=auth_failed`)
 }

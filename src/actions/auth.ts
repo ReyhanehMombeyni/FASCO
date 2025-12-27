@@ -6,6 +6,7 @@ import { LoginFormData } from '../schemas/LoginSchema';
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 
+
 export async function signUpUser({username, password, email}: SignUpFormData) {
   const supabase = await createClient();
 
@@ -86,3 +87,43 @@ export async function signInWithGoogle() {
   return redirect(data.url)
 }
 
+
+export async function resetPasswordAction(email: string) {
+  const supabase = await createClient();
+  
+  const { error } = await supabase.auth.resetPasswordForEmail(email);
+
+  if (error) return { success: false, message: error.message };
+
+  redirect(`/confirmation-window?email=${encodeURIComponent(email)}`);
+}
+
+export async function verifyOtpAction(email: string, token: string) {
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.verifyOtp({
+    email,
+    token,
+    type: 'recovery',
+  });
+
+  if (error) {
+    return { success: false, message: error.message };
+  }
+
+  return { success: true };
+}
+
+export async function updatePasswordAction(password: string) {
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.updateUser({
+    password: password,
+  });
+
+  if (error) {
+    return { success: false, message: error.message };
+  }
+
+  return { success: true, message: "Password updated successfully." };
+}

@@ -5,20 +5,32 @@ import { GoogleButton, OrSeparator, LoginForm } from "../components";
 
 const page = () => {
   return (
-    <main className="m-10 lg:my-15 lg:mx-30 xl:mx-40 border-gray-200 border md:grid lg:grid-cols-3 items-center">
-      <div className="hidden lg:block relative h-full lg:col-span-1">
-        <Image src={signupImg} alt="FASCO fashion authentication" fill className="object-cover" priority
-    sizes="(max-width: 1024px) 0vw, 33vw" />
+    <main className="min-h-screen">
+      <div className="mx-10 mt-10 lg:mt-20 lg:mx-30 xl:mx-40 border-gray-200 border md:grid lg:grid-cols-3 items-center">
+        <div className="hidden lg:block relative h-full lg:col-span-1">
+          <Image
+            src={signupImg}
+            alt="FASCO fashion authentication"
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 1024px) 0vw, 33vw"
+          />
+        </div>
+        <div className="flex flex-col justify-between items-left px-5 py-5 w-full lg:col-span-2">
+          <Logo />
+          <h1 className="text-sm lg:text-lg font-serif font-extralight text-gray-800 tracking-wider pt-5">
+            Sign in to FASCO
+          </h1>
+          <div className="text-center pt-2">
+            <GoogleButton />
+          </div>
+          <div className="flex justify-center items-center">
+            <OrSeparator />
+          </div>
+          <LoginForm />
+        </div>
       </div>
-      <div className="flex flex-col justify-between items-left px-5 py-5 w-full lg:col-span-2">
-              <Logo />
-              <h1 className="text-sm lg:text-lg font-serif font-extralight text-gray-800 tracking-wider pt-5">Sign in to FASCO</h1>
-              <div className="text-center pt-2"><GoogleButton /></div>
-              <div className="flex justify-center items-center">
-                <OrSeparator />
-              </div>
-              <LoginForm />
-            </div>
     </main>
   );
 };
