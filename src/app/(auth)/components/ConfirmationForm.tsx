@@ -1,3 +1,4 @@
+"use client"
 import { Button, Input } from "@/components/ui";
 import { verifyOtpAction } from "@/src/actions/auth";
 import { useRouter } from "next/navigation";

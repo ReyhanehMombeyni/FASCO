@@ -1,13 +1,13 @@
-"use client";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import { Logo } from "@/src/components/shared";
 import signupImg from "@/public/images/auth/login.jpg";
 import { ConfirmationForm } from "../components/ConfirmationForm";
 
-const ConfirmationPage = () => {
-  const searchParams = useSearchParams();
-  const email = searchParams.get("email") || "";
+const ConfirmationPage = async ({ searchParams }: {
+  searchParams: Promise<{ email?: string }>;
+}) => {
+  const resolvedParams = await searchParams;
+  const email = resolvedParams.email || "";
 
   return (
         <main className="min-h-screen">
