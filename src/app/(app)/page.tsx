@@ -6,12 +6,14 @@ import {
   ProductShowcase,
   InstagramFeed,
   NewArrivalsSection,
-  TestimonialSlider,
 } from "./components/homepage";
 import {
   DealsOfTheMonthSkeleton,
+  InstagramSkeleton,
   NewArrivalsSkeleton,
+  ProductShowcaseSkeleton,
 } from "./components/skeleton";
+import Testimonial from "./components/homepage/Testimonial";
 
 export default async function Home({
   searchParams,
@@ -30,14 +32,14 @@ export default async function Home({
       <Suspense fallback={<NewArrivalsSkeleton />}>
         <NewArrivalsSection searchParams={params} />
       </Suspense>
-      <Suspense>
+      <Suspense fallback={<ProductShowcaseSkeleton />}>
         <ProductShowcase />
       </Suspense>
-      <Suspense>
+      <Suspense fallback={<InstagramSkeleton />}>
         <InstagramFeed />
       </Suspense>
       <Suspense>
-        <TestimonialSlider />
+        <Testimonial />
       </Suspense>
     </div>
   );

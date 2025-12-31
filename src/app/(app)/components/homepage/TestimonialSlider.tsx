@@ -1,92 +1,67 @@
 "use client";
 
 import { useState } from "react";
-import { TestimonialCard } from "./TestimonialCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useComments } from "@/src/hooks/useComments";
+import { TestimonialCard } from "./TestimonialCard";
+import { Comment } from "@/src/types/homepage";
+import { motion, AnimatePresence } from "framer-motion";
 
-export const TestimonialSlider = () => {
-  const { data: testimonials = [], isLoading } = useComments();
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const totalSlides = testimonials.length;
+export const TestimonialSlider = ({comments}: {comments: Comment[]}) => {
+  const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
 
-  if(totalSlides===0) return null;
-
-  const goToNext = () => {
-    if (currentIndex === 2) setCurrentIndex(0);
-    else setCurrentIndex((prevIndex) => prevIndex + 1);
+  const nextStep = () => {
+    setDirection(1);
+    setIndex((prev) => (prev + 1) % comments.length);
   };
 
-  const goToPrev = () => {
-    if (currentIndex === 0) setCurrentIndex(2);
-    else setCurrentIndex((prevIndex) => prevIndex - 1);
+  const prevStep = () => {
+    setDirection(-1);
+    setIndex((prev) => (prev - 1 + comments.length) % comments.length);
   };
 
-  const getIndex = (offset: number) => {
-    return (currentIndex + offset + totalSlides) % totalSlides;
-  };
+  const leftIndex = (index - 1 + comments.length) % comments.length;
+  const rightIndex = (index + 1) % comments.length;
+
+  const displayComments = [
+    { ...comments[leftIndex], position: "left" },
+    { ...comments[index], position: "center" },
+    { ...comments[rightIndex], position: "right" },
+  ];
 
   return (
-    <section className="px-5 md:px-20 lg:px-30 py-10 bg-gray-50">
-      <h2 className="text-lg md:text-xl lg:text-4xl font-serif text-gray-600 lg:font-medium text-center tracking-wide mb-4">
-        This Is What Our Customers Say
-      </h2>
-      <p className="text-center text-[10px] md:text-xs lg:text-sm text-gray-400 mb-10 max-w-lg mx-auto">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque
-        duis
-      </p>
-
-      {isLoading ? (
-        <div className="mx-auto w-full">Comments is Loading...</div>
-      ) : (
-        <div className="relative w-full flex justify-center items-center">
-          {testimonials.map((comment, index) => {
-            const isActive = index === currentIndex;
-            const isLeft = index === getIndex(-1);
-            const isRight = index === getIndex(1);
-
-            let positionClasses = "";
-
-            if (isActive) {
-              positionClasses = "z-20 scale-100 w-3/4 md:w-3/5";
-            } else if (isLeft) {
-              positionClasses =
-                "absolute left-5 z-10 scale-75 opacity-70 w-3/4 md:w-3/5 xl:w-3/4";
-            } else if (isRight) {
-              positionClasses =
-                "absolute right-5 z-10 scale-75 opacity-70 w-3/4 md:w-3/5 xl:w-3/4";
-            } else {
-              return null;
-            }
-
-            return (
-              <div
-                key={index}
-                className={positionClasses + " transition-all duration-700"}
+      <div className="max-w-lg mx-auto">
+        <div className="relative h-[300px] flex items-center justify-center">
+          <AnimatePresence initial={false} custom={direction}>
+            {displayComments.map((comment) => (
+              <motion.div
+                key={`${comment.id}-${comment.position}`}
+                custom={direction}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{
+                  opacity: comment.position === "center" ? 1 : 0.4,
+                  scale: comment.position === "center" ? 1 : 0.8,
+                  x: comment.position === "center" ? 0 : comment.position === "left" ? "-100%" : "100%",
+                  zIndex: comment.position === "center" ? 10 : 5,
+                }}
+                exit={{ opacity: 0, scale: 0.5 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="absolute w-full max-w-sm"
               >
-                <TestimonialCard comment={comment} isActive={isActive} />
-              </div>
-            );
-          })}
+                <TestimonialCard comment={comment} isActive={comment.position === "center"} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
-      )}
 
-      <div className="flex justify-center mt-5 space-x-4">
-        <button
-          onClick={goToPrev}
-          className="p-3 rounded-full bg-white border-none text-gray-600 hover:bg-gray-100 transition shadow-xl"
-          aria-label="Previous testimonial"
-        >
-          <ChevronLeft />
-        </button>
-        <button
-          onClick={goToNext}
-          className="p-3 rounded-full bg-white border-none text-gray-600 hover:bg-gray-100 transition shadow-md"
-          aria-label="Next testimonial"
-        >
-          <ChevronRight />
-        </button>
+        <div className="flex justify-center gap-6 mt-10">
+          <button onClick={prevStep} className="p-1 lg:p-2 rounded-full bg-gray-100 hover:bg-gray-300 text-gray-700 hover:text-white transition-all shadow-md group">
+            <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
+          </button>
+          <button onClick={nextStep} className="p-1 lg:p-2 rounded-full bg-gray-100 hover:bg-gray-300 text-gray-700 hover:text-white transition-all shadow-md group">
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
+          </button>
+        </div>
       </div>
-    </section>
   );
 };

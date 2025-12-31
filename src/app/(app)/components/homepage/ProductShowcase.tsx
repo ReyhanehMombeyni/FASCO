@@ -1,9 +1,18 @@
 import Image from "next/image";
-import { Check, Shield, Truck, Headset } from "lucide-react";
 import peakyBlinders from "@/public/images/homepage/peakyBlinders.png";
 import { getShowcaseProduct } from "@/src/services/products";
 import { ButtonLink } from "@/src/components/shared";
 import { FeatureCardProps } from "@/src/types/homepage";
+import { featureCards } from "@/src/constants";
+
+const fallbackProduct = {
+  id: "fallback",
+  name: "Peaky Blinders Edition",
+  description: "High-quality crafted suit for special occasions...",
+  collections: { name: "Best Sellers" },
+  price: 299.00,
+  sizes: [{ symbol: "M" }]
+};
 
 const FeatureCard = ({ icon: Icon, title, subtitle }: FeatureCardProps) => {
   return (
@@ -18,7 +27,9 @@ const FeatureCard = ({ icon: Icon, title, subtitle }: FeatureCardProps) => {
 };
 
 export const ProductShowcase = async () => {
-  const product = await getShowcaseProduct();
+  const product = await getShowcaseProduct() || fallbackProduct;
+  const {id, name, description, collections, price, sizes} = product;
+  const symbol = sizes[0]?.symbol;
   return (
     <section className="w-full">
       <div className="flex bg-gray-200 h-90 lg:h-110 xl:h-120">
@@ -27,7 +38,6 @@ export const ProductShowcase = async () => {
             src={peakyBlinders}
             alt="peakyBlinders"
             fill
-            priority
             className="object-fit"
             sizes="(max-width: 1024px) 0vw, 50vw"
           />
@@ -35,52 +45,35 @@ export const ProductShowcase = async () => {
 
         <div className="p-5 pr-15 flex flex-col justify-center items-start md:pr-10 md:py-15 md:pl-20">
           <p className="text-xs md:text-sm text-gray-500 mb-3">
-            {product?.collections?.name}
+            {collections?.name}
           </p>
-          <h1 className="text-4xl font-serif text-gray-700 mb-5 lg:text-5xl lg:tracking-wide lg:mb-8">
-            {product.name}
-          </h1>
+          <h2 className="text-4xl font-serif text-gray-700 mb-5 lg:text-5xl lg:tracking-wide lg:mb-8">
+            {name}
+          </h2>
           <p className="text-xs lg:text-sm uppercase font-semibold text-gray-700 tracking-wider underline cursor-pointer mb-4">
             Description
           </p>
           <p className="text-[10px] sm:text-xs md:max-w-lg font-extralight text-gray-600 mb-3 xl:mb-6 lg:text-sm">
-            {product.description}
+            {description}
           </p>
           <div className="flex items-center space-x-2 mb-4">
             <p className="text-sm text-gray-500 tracking-wider">Size:</p>
             <div className="bg-black text-white text-xs px-3 md:text-sm rounded-md shadow-md opacity-90">
-              {product?.sizes[0]?.symbol || "M"}
+              {symbol || "M"}
             </div>
           </div>
 
           <p className="text-lg font-medium mb-5 lg:text-xl lg:mb-8">
-            ${product.price.toFixed(2)}
+            ${price.toFixed(2)}
           </p>
-          <ButtonLink href={`/product/${product.id}`} />
+          <ButtonLink href={`/product/${id}`} />
         </div>
       </div>
 
       <div className="px-5 md:px-20 lg:px-30 grid grid-cols-2 gap-3 md:gap-5 lg:grid-cols-4 py-8 md:py-12 bg-white">
-        <FeatureCard
-          icon={Check}
-          title="High Quality"
-          subtitle="crafted from top materials"
-        />
-        <FeatureCard
-          icon={Shield}
-          title="Warranty Protection"
-          subtitle="Over 2 years"
-        />
-        <FeatureCard
-          icon={Truck}
-          title="Free Shipping"
-          subtitle="order over 150 $"
-        />
-        <FeatureCard
-          icon={Headset}
-          title="24/7 Support"
-          subtitle="Dedicated support"
-        />
+        {
+          featureCards.map(({id, icon, title, subtitle}) => <FeatureCard key={id} icon={icon} title={title} subtitle={subtitle} />)
+        }
       </div>
     </section>
   );

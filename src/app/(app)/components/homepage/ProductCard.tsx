@@ -28,7 +28,7 @@ export function ProductCard({ product }: { product: Product }) {
       className="px-2 pt-2 sm:p-4 rounded-lg border-none"
       style={{ boxShadow: "0 10px 25px rgba(0,0,0,0.1)" }}
     >
-      <div className="overflow-y-hidden relative w-full aspect-video">
+      <div className="overflow-y-hidden relative w-full aspect-3/2">
         <Image
           src={image_url}
           alt={name}

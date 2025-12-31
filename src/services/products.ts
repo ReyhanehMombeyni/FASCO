@@ -1,7 +1,8 @@
 "use server";
-import { createClient as createServerSupabaseClient } from "@/src/supabase/server";
+import { createClientForCache, createClient as createServerSupabaseClient } from "@/src/supabase/server";
 import { Product, ProductDetailType } from "../types/products";
 import { PaginatedData } from "../types/shop";
+import { unstable_cache } from "next/cache";
 
 export async function getCategories() {
   const supabase = await createServerSupabaseClient();
@@ -154,39 +155,59 @@ export async function getReviewsProduct(
   return reviews as ProductReview[] | null;
 }
 
-export async function getShowcaseProduct() {
-  const supabase = await createServerSupabaseClient();
-  const { data } = await supabase
-    .from('products')
-     .select(
-      `*,collections(name), sizes(symbol)`
-    )
-    .eq('name', "Peaky Blinders")
-    .single(); 
-    
-  return data;
-}
+export const getShowcaseProduct = unstable_cache(
+  async () => {
+    const supabase = await createClientForCache();
+    const { data, error } = await supabase
+      .from('products')
+      .select(`*, collections(name), sizes(symbol)`)
+      .eq('name', "Peaky Blinders")
+      .single();
 
-export async function getLatestProductsImages() {
-  try {
-    const supabase = await createServerSupabaseClient();
-
-    const { data: products, error: productsError } = await supabase
-      .from("products")
-      .select("id, name, image_url")
-      .order("created_at", { ascending: false }) 
-      .limit(10); 
-    if (productsError) {
-      throw new Error(productsError.message);
+    if (error) {
+      console.error("Showcase product error:", error);
+      return null;
     }
-
-    return products.map((p) => ({
-      src: p.image_url,
-      alt: p.name,
-      id: p.id,
-    }));
-  } catch (error) {
-    console.error("Error in getLatestProductsImages:", error);
-    return [];
+    return data;
+  },
+  ["product-showcase-peaky"],
+  { 
+    revalidate: 3600 * 12,
+    tags: ["products", "showcase"] 
   }
+);
+
+export interface productsImages {
+src: string; alt: string; id: string;
 }
+
+export const getLatestProductsImages = unstable_cache(
+  async (): Promise<productsImages[]> => {
+    try {
+      const supabase = await createClientForCache();
+
+      const { data: products, error } = await supabase
+        .from("products")
+        .select("id, name, image_url")
+        .order("created_at", { ascending: false })
+        .limit(10);
+
+      if (error) throw new Error(error.message);
+
+      return products.map((p) => ({
+        src: p.image_url,
+        alt: p.name,
+        id: p.id,
+      }));
+    } catch (error) {
+      console.error("Instagram cache fetch error:", error);
+      return [];
+    }
+    
+  },
+  ["instagram-feed-images"],
+  {
+    revalidate: 3600 * 24,
+    tags: ["products", "instagram"],
+  }
+);

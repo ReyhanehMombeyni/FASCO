@@ -54,7 +54,10 @@ export interface ProductDetailType extends Product {
 
 export interface ProductsSectionProps {
   categories: Category[];
-  initialCategoryFromUrl: Category;
+  initialCategory: Category;
+  initialProducts: Product[];
+  initialTotal: number;
+  hasParam: boolean;
 }
 
 export interface ProductWithCategory extends Product {

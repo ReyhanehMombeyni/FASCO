@@ -1,18 +1,27 @@
-import { getCategories } from "@/src/services/products";
+import { getCategories, getProductsByCategory } from "@/src/services/products";
 import { ProductsSection } from "./ProductsSection";
 import { SearchParamsProp } from "@/src/types/homepage";
 
-export const NewArrivalsSection = async ( {
-  searchParams
+export const NewArrivalsSection = async ({
+  searchParams,
 }: {
-  searchParams: SearchParamsProp
+  searchParams: SearchParamsProp;
 }) => {
-  const {category} = searchParams;
   const categories = await getCategories();
+  const categoryParam = searchParams.category;
 
-  const activeCategory = categories.find(c => (category === "discount-deals" ? c.name === "Discount Deals" : c.name === category)
-  ) || categories[1];
-  
+  const activeCategory =
+    categories.find((c) =>
+      categoryParam === "discount-deals"
+        ? c.name === "Discount Deals"
+        : c.name === categoryParam
+    ) || categories[1];
+
+  const { products, totalCount } = await getProductsByCategory(
+    activeCategory.id,
+    6,
+    0
+  );
 
   return (
     <section className="py-5 sm:py-8 md:py-12 lg:py-20 px-5 md:px-20 lg:px-30">
@@ -23,7 +32,14 @@ export const NewArrivalsSection = async ( {
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque
         duis ultrices solliciitudin sem. scelerisque duid uitrices solicitudin.
       </p>
-      <ProductsSection categories={categories} initialCategoryFromUrl={activeCategory} />
+      <ProductsSection
+        key={activeCategory.id}
+        categories={categories}
+        initialCategory={activeCategory}
+        initialProducts={products}
+        initialTotal={totalCount}
+        hasParam={!!searchParams.category}
+      />
     </section>
   );
 };

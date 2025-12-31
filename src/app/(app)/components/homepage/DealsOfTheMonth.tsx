@@ -1,36 +1,36 @@
 import { Button } from "@/components/ui";
-import { Timer } from "./Timer"; 
 import { DealSlider } from "./DealSlider"; 
 import { getActiveCampaignEndDate, getDiscountedProducts } from "@/src/services/deals";
 import Link from "next/link";
+import { SafeTimer } from './SafeTimer';
 
 export async function DealsOfTheMonth() {
 
-  const campaignDetail = await getActiveCampaignEndDate();
-  const discountedProducts = await getDiscountedProducts();
-  const nameCompain: string = campaignDetail?.[0]?.name;
-  const campaignEndDate= campaignDetail?.[0]?.end_date;
+  const [campaignData, discountedProducts] = await Promise.all([getActiveCampaignEndDate(), getDiscountedProducts()])
+  
+  const nameCompain = campaignData?.name;
+  const campaignEndDate = campaignData?.end_date;
   
   return (
-    <div className="bg-[#fcfcfc] py-10 md:py-15 lg:py-30 pl-5 md:pl-20 lg:pl-30 grid grid-cols-5 gap-2 md:gap-10 items-start rounded-xl">
+    <div className="bg-[#fcfcfc] py-10 md:py-15 lg:py-20 pl-5 md:pl-20 lg:pl-30 grid grid-cols-5 gap-2 md:gap-10 items-start rounded-xl">
         
         <div className="space-y-3 lg:space-y-8 pt-2 col-span-2">
-          <h2 className="text-sm sm:text-lg md:text-2xl lg:text-4xl font-medium text-gray-700 font-serif tracking-wide">
+          <h2 className="text-sm sm:text-lg md:text-2xl lg:text-3xl font-medium text-gray-700 font-serif tracking-wide">
             Deals Of The Month
           </h2>
-          <p className="text-[8px] md:text-xs text-muted-foreground lg:text-sm max-w-sm">
+          <p className="text-[8px] md:text-xs text-muted-foreground max-w-sm">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
 
-          <Button className="text-[10px] py-4 sm:px-5 sm:text-xs md:px-8 md:py-5 md:text-sm lg:px-10 lg:py-7 lg:text-lg">
+          <Button className="text-[10px] py-4 sm:px-5 sm:text-xs md:px-8 md:py-5 md:text-sm">
             <Link href="/?category=discount-deals#new-arrivals" scroll={false}>Buy Now</Link>
           </Button>
 
           <div className="pt-4 sm:pt-10 space-y-4">
-            <h3 className="text-[10px] sm:text-xs md:text-sm lg:text-xl lg:font-medium text-gray-700">
+            <h3 className="text-[10px] sm:text-xs md:text-sm lg:text-base lg:font-medium text-gray-700">
               Hurry, Before It is Too Late!
             </h3>
-            <Timer endDateString={campaignEndDate} type="DealsOfTheMonth" />
+            <SafeTimer endDateString={campaignEndDate} type="DealsOfTheMonth" />
           </div>
         </div>
 

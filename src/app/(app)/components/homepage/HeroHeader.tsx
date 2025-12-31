@@ -10,19 +10,19 @@ import Link from "next/link";
 export function HeroHeader() {
   return (
     <header className="grid grid-cols-1 lg:grid-cols-3 lg:gap-5 my-5 md:my-10 lg:my-15 px-5 md:px-20 lg:px-30">
-      <div className="hidden lg:block relative bg-gray-200 rounded-2xl">
+      <div className="hidden lg:block relative bg-gray-200 rounded-2xl overflow-hidden">
         <Image
           src={LeftMen}
           alt="Man standing"
           fill
-          priority
           sizes="(max-width: 1024px) 0vw, 33vw"
           className="object-contain pt-10"
+          loading="eager"
         />
       </div>
 
       <div className="flex flex-col justify-between bg-white">
-        <div className="flex items-end justify-center bg-gray-200 rounded-2xl h-35">
+        <div className="flex items-end justify-center bg-gray-200 rounded-2xl h-35 overflow-hidden">
           <Image src={Womens} priority alt="Womens" width={360} height={200} className="rounded-2xl" style={{ height: 'auto' }} />
         </div>
 
@@ -47,7 +47,7 @@ export function HeroHeader() {
           </Button>
         </div>
 
-        <div className="flex justify-center items-end rounded-2xl bg-[#FCAE9D] h-35">
+        <div className="flex justify-center items-end rounded-2xl bg-[#FCAE9D] h-35 overflow-hidden">
           <Image
             src={SmileWomens}
             alt="Bottom models"
@@ -59,14 +59,14 @@ export function HeroHeader() {
         </div>
       </div>
 
-      <div className="hidden lg:block relative bg-gray-200 rounded-2xl">
+      <div className="hidden lg:block relative bg-gray-200 rounded-2xl overflow-hidden">
         <Image
           src={RightMen}
           alt="Man standing"
           fill
-          priority
           sizes="(max-width: 1024px) 0vw, 33vw"
           className="object-contain"
+           loading="eager"
         />
       </div>
     </header>

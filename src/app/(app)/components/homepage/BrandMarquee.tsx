@@ -22,7 +22,7 @@ const BRANDS = [
 
 export const BrandMarquee = () => {
   return (
-    <section className="overflow-hidden py-8 bg-white mb-10 md:mx-20 lg:mx-30">
+    <section className="overflow-hidden py-5 bg-white md:mx-20 lg:mx-30">
       <div 
         className="flex animate-marquee w-fit" 
         style={{ animationDuration: '30s' }}
@@ -30,9 +30,9 @@ export const BrandMarquee = () => {
         {BRANDS.map((brand, index) => (
           <span 
             key={index} 
-            className="shrink-0 mx-8 whitespace-nowrap"
+            className="shrink-0 mx-5 whitespace-nowrap"
           >
-            <Image src={brand} alt="image brand" width={170} height={50} style={{ width: 'auto', height: 'auto' }} />
+            <Image src={brand} alt="image brand" width={100} height={30} style={{ width: 'auto', height: 'auto' }} />
           </span>
         ))}
       </div>
