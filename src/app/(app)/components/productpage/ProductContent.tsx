@@ -18,7 +18,7 @@ export const ProductContent = async ({params}: ParamsId) => {
   }
 
   const campaignDetail = await getActiveCampaignEndDate();
-  const campaignEndDate = campaignDetail?.[0]?.end_date;
+  const campaignEndDate = campaignDetail?.end_date;
 
   let discountAmount = 0;
   if (product.discount_percentage) {
